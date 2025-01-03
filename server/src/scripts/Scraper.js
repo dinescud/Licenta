@@ -1,16 +1,16 @@
 const PORT = 8080;
-const axios = require('axios');
-const cheerio = require('cheerio');
-const express = require('express');
+import { load } from 'cheerio';
+import express from 'express';
 
 const app = express();
-const url = "https://www.urlvoid.com/scan/instagram.com";
+const url = "https://www.urlvoid.com/scan/wizzair.com";
 
 // Function to scrape data
-axios(url)
+// use fetch()
+fetch(url)
   .then(response => {
     const html = response.data;
-    const $ = cheerio.load(html);
+    const $ = load(html);
     const reportData = {};
 
     // Scraping the required data

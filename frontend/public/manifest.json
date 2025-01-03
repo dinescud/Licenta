@@ -1,0 +1,10 @@
+{
+    "manifest_version": 3,
+    "name": "Website Reputation Checker",
+    "version": "1.0.0",
+    "description": "Check the reputation and details of any website for free",
+    "action": {
+      "default_popup": "index.html"
+    },
+    "permissions": []
+  }
