@@ -1,0 +1,27 @@
+{
+  "scripts": {
+    "dev": "vite",
+    "start": "node dist/scripts/Scraper.js",
+    "start:server": "node bin/server",
+    "build": "tsc -p .",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "build:watch": "nodemon --watch src --ext tsx,ts --exec npm run build"
+  },
+  "dependencies": {
+    "@types/express": "^5.0.0",
+    "@types/mongoose": "^5.11.96",
+    "@types/node-fetch": "^2.6.12",
+    "bcryptjs": "^3.0.2",
+    "cheerio": "^1.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "lodash": "^4.17.21",
+    "mongoose": "^8.9.5",
+    "node-fetch": "^2.7.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/lodash": "^4.17.16"
+  }
+}
