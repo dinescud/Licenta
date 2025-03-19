@@ -12,7 +12,7 @@ export class ScanHistoryModel extends AbstractModel<ScanHistoryModelType> {
     };
 
     protected SchemaOptions: mongoose.SchemaOptions = {
-        collection: 'users',
+        collection: 'scanHistory',
         toObject: { getters: true, transform: transformFn },
         toJSON: { getters: true, transform: transformFn },
     }
@@ -22,7 +22,8 @@ export class ScanHistoryModel extends AbstractModel<ScanHistoryModelType> {
     protected populateOptions: PopulateOpts = [];
 
     constructor(Mongoose: mongoose.Mongoose) {
-        super(Mongoose, ModelNameEnum.USER);
+        console.log('HISTORY!!!!')
+        super(Mongoose, ModelNameEnum.SCAN_HISTORY);
         this.setup();
     }
 

@@ -16,3 +16,8 @@ export interface PaginationFilter {
   orderBy: string;
   orderDir: 'asc' | 'desc';
 }
+
+export interface Query {
+  $or?: { [key: string]: RegExp }[];
+  [key: string]: any; // Allow other properties
+}

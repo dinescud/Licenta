@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
-import { CONFIGURATION } from "../config/config"
+import { config } from "../config/config"
 
 export const initDB = async () => {
-    await mongoose.connect(CONFIGURATION.mongo_url)
+    await mongoose.connect(config.mongo_db)
     console.log('connected to mongodb');
 }

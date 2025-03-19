@@ -38,6 +38,7 @@ export interface DomainBrowseFilter extends with_populate_optional, with_text_op
     _id?: string;
     name?: string;
     score?: string;
+    pagination?: QueryPaginationFilter;
 }
 
 interface with_text_optional {
@@ -64,4 +65,14 @@ export interface RegisterRequest {
     email: string;
     password: string;
     confirmPassword: string;
+}
+
+export interface UserInfo {
+    fullName: string;
+    password: string;
+    email: string;
+}
+
+export interface RequestWrapper extends Request { 
+    userContext?: UserContext;
 }

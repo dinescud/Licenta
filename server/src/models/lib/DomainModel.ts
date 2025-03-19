@@ -16,7 +16,7 @@ export class DomainModel extends AbstractModel<DomainModelType> {
     };
 
     protected SchemaOptions: mongoose.SchemaOptions = {
-        collection: 'users',
+        collection: 'domains',
         toObject: { getters: true, transform: transformFn },
         toJSON: { getters: true, transform: transformFn },
     }
@@ -26,7 +26,8 @@ export class DomainModel extends AbstractModel<DomainModelType> {
     protected populateOptions: PopulateOpts = [];
 
     constructor(Mongoose: mongoose.Mongoose) {
-        super(Mongoose, ModelNameEnum.USER);
+        console.log('DOMAIN!!!!')
+        super(Mongoose, ModelNameEnum.DOMAIN);
         this.setup();
     }
 

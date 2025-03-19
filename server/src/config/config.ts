@@ -4,7 +4,7 @@ export const config: CONFIG_TYPES = {
     express: {
         PORT: 3000,
     },
-    db: 'mongodb://localhost:37017/licenta',
+    mongo_db: 'mongodb://localhost:37017/licenta',
     mongoQueryLimit: 500,
     jwt_secret: 'cheie_secreta_nebuna',
     cookieConfig: {

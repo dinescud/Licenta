@@ -1,8 +1,8 @@
 {
   "scripts": {
     "dev": "vite",
-    "start": "node dist/scripts/Scraper.js",
-    "start:server": "node bin/server",
+    "start": "node ./bin/server.js",
+    "start:server": "node ./bin/server",
     "build": "tsc -p .",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -16,12 +16,17 @@
     "cheerio": "^1.0.0",
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "mongoose": "^8.9.5",
-    "node-fetch": "^2.7.0"
+    "node-fetch": "^2.7.0",
+    "tsc": "^2.0.4",
+    "typescript": "^5.8.2",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
+    "@types/jsonwebtoken": "^9.0.9",
     "@types/lodash": "^4.17.16"
   }
 }

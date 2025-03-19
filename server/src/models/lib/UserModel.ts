@@ -24,6 +24,8 @@ export class UserModel extends AbstractModel<UserModelType> {
     protected populateOptions: PopulateOpts = [];
 
     constructor(Mongoose: mongoose.Mongoose) {
+        console.log('USERSS!!!!')
+
         super(Mongoose, ModelNameEnum.USER);
         this.setup();
     }

@@ -15,6 +15,4 @@ export class ModelsInstance {
         this.domainModel = new DomainModel(mongoose);
         this.scanhistoryModel = new ScanHistoryModel(mongoose);
     }
-
-
 }

@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { config } from "../../config/config";
 import { QueryPaginationFilter } from "../../types";
-import { PaginationFilter } from "./types";
+import { PaginationFilter, Query } from "./types";
 
 /**
  * Method used to transform mongo documents after querying them.
@@ -82,7 +82,7 @@ export const validatePaginationFilter = (originalPagination: QueryPaginationFilt
  * @param {object} query original query.
  * @returns {object} query with free text search.
  */
-export const addTextQuery = (textFilter: string, searchFields: string[], query: object): object => {
+export const addTextQuery = (textFilter: string, searchFields: string[], query: Query): object => {
     const text = textFilter || '';
     query = _.omit(query, ['text']);
     if(!_.isNil(text) && !_.isEmpty(text) && !_.isEmpty(searchFields)) {
@@ -96,7 +96,6 @@ export const addTextQuery = (textFilter: string, searchFields: string[], query: 
             }));
         } catch (error) {}
     }
-    
     return query;
 }
 
