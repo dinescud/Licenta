@@ -2,12 +2,12 @@ import { Router } from "express";
 import { AuthRoutes } from "./lib/AuthRoutes"
 import { MiddlewareInstance } from "../middleware/MiddlewareInstance";
 import { UserRoutes } from "./lib/UserRoutes";
-import { DomainRoutes } from "./lib/DomainRoutes";
+import { ScanRoutes } from "./lib/ScanRoutes";
 
 export class RoutesInstance {
     public authRoutes: AuthRoutes;
     public userRoutes: UserRoutes;
-    public domainRoutes: DomainRoutes;
+    public scanRoutes: ScanRoutes;
     private middlewareInstance: MiddlewareInstance;
     private router: Router = Router();
 
@@ -15,7 +15,7 @@ export class RoutesInstance {
         this.middlewareInstance = middlewares;
         this.authRoutes = new AuthRoutes(this.middlewareInstance.authMiddleware);
         this.userRoutes = new UserRoutes(this.middlewareInstance.userMiddleware);
-        this.domainRoutes = new DomainRoutes(this.middlewareInstance.domainMiddleware);
+        this.scanRoutes = new ScanRoutes(this.middlewareInstance.domainMiddleware);
         this.router.use('/api', this.initializeRoutes())
     }
 
@@ -32,7 +32,7 @@ export class RoutesInstance {
         const router = Router();
         router.use('/auth', this.authRoutes.getRouter());
         router.use('/user', this.userRoutes.getRouter());
-        router.use('/domain', this.domainRoutes.getRouter());
+        router.use('/domain', this.scanRoutes.getRouter());
         return router;
     }
 }

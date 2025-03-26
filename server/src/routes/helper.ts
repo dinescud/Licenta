@@ -83,17 +83,17 @@ export const clearCookie = (res: Response): void => {
     });
 }
 
-export const verifyToken = (req: RequestWrapper, res: Response, next: NextFunction): void => {
-    const token = req.cookies.token;
-    try {
-        const userContext = decodeToken(token);
-        req.userContext = userContext;
-        next();
-    } catch (error) {
-        sendErrorResponse(new Unauthorized('Not authorized'), res);
-        return;
-    }
-}
+// export const verifyToken = (req: RequestWrapper, res: Response, next: NextFunction): void => {
+//     const token = req.cookies.token;
+//     try {
+//         const userContext = decodeToken(token);
+//         req.userContext = userContext;
+//         next();
+//     } catch (error) {
+//         sendErrorResponse(new Unauthorized('Not authorized'), res);
+//         return;
+//     }
+// }
 
 export const getUserContext = (req: RequestWrapper): UserContext => {
     const usercontext: UserContext = req.userContext || {

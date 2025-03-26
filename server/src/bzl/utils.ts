@@ -10,9 +10,12 @@ export const formatPaginationFilter = (pagination?: QueryPaginationFilter): Quer
     }
 }
 
-// async function getCurrentTab() {
-//     let queryOptions = { active: true, lastFocusedWindow: true };
-//     // `tab` will either be a `tabs.Tab` instance or `undefined`.
-//     let [tab] = await chrome.tabs.query(queryOptions);
-//     return tab;
-//   }
+export async function extractDomainName(url: string): Promise<string> {
+    const match = url.match(/(?:https?:\/\/)?(?:www\.)?([^\/]+\.[a-z]+)/);
+    console.log('MATCH', match);
+    return match ? match[1] : '';
+  }
+  
+export async function recomputeUrl(domain: string): Promise<string> {
+return `https://www.urlvoid.com/scan/${domain}`
+}

@@ -11,6 +11,7 @@
     "build:watch": "nodemon --watch src --ext tsx,ts --exec npm run build"
   },
   "dependencies": {
+    "@theme-toggles/react": "^4.1.0",
     "express": "^4.21.2",
     "nodemon": "^3.1.9",
     "react": "^18.3.1",

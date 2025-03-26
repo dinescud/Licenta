@@ -76,3 +76,7 @@ export interface UserInfo {
 export interface RequestWrapper extends Request { 
     userContext?: UserContext;
 }
+
+export interface ScanRequest { 
+    url: string;
+}

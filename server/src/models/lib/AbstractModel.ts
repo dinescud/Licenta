@@ -161,7 +161,7 @@ export abstract class AbstractModel<ModelType extends mongoose.Document> {
             .catch(error => { logger.error(error); throw error; })
     }
 
-    async create(object: object): Promise<ModelType> {
+    async create(object: Partial<ModelType>): Promise<ModelType> {
         if(!this.Model) throw new Error('Setup method was not called!');
 
         console.log(object);

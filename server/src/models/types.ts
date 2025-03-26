@@ -7,15 +7,13 @@ export interface UserModelType extends ModelType {
 }
 
 export interface DomainModelType extends ModelType {
-  name: string;
   websiteAddress: string;
-  lastAnalysis: Date;
+  lastAnalysis: string;
   detectionCounts: string;
-  domainRegistration: Date;
+  domainRegistration: string;
   ipAddress: string;
   serverLocation: string;
   city: string;
-  region: string;
 }
 
 export interface ScanHistoryModelType extends ModelType {

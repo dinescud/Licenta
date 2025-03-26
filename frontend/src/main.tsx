@@ -1,10 +1,16 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './pages/popup/App.tsx'
+import { AuthProvider } from './contexts/AuthContext.tsx'
+import ScanResults from './pages/popup/scan.tsx'
+import { ThemeProvider } from './components/ThemeToggle/ThemeContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <ThemeProvider defaultTheme="dark">
+      <AuthProvider>
+        <ScanResults />
+      </AuthProvider>
+    </ThemeProvider>
   </StrictMode>,
 )

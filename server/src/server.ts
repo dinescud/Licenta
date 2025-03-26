@@ -1,6 +1,7 @@
 import express from 'express';
 var cors = require('cors')
 import { Factory } from './factory';
+import { factory } from 'typescript';
 
 export class Server {
   // private fac: Factory;
@@ -31,15 +32,13 @@ export class Server {
     this.app.use(express.json());
 
     // Routes
-    // this.setupRoutes();
+    this.setupRoutes();
 
     console.log("✅ Server initialized successfully.");
   }
-  // private static setupRoutes() {
-  //   this.app.use("/api/users", userRoutes);
-  //   this.app.use("/api/domains", domainRoutes);
-  //   this.app.use("/api/scans", scanHistoryRoutes);
-  // }
+  private static setupRoutes() {
+    this.app.use("/api", Factory.getInstance().getRoutes().getRouter());
+  }
 }
 
 // Start the server

@@ -6,6 +6,6 @@
     "action": {
       "default_popup": "index.html"
     },
-    "permissions": ["identity", "identity.email"],
+    "permissions": ["identity", "identity.email", "tabs", "activeTab", "webNavigation", "storage"],
     "background": "Auth.ts"
   }
