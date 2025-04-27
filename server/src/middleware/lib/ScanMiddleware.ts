@@ -9,8 +9,10 @@ export class ScanMiddleware {
 
     const scanRequest: ScanRequest = JSON.parse(JSON.stringify({
         url: req.body.url,
+        // userContext: req.body.externalId,
     }));
-
-    return scan.scan({} as unknown as UserContext, scanRequest);  
+    
+    const userContext = req.body.externalId;
+    return scan.scan(userContext, scanRequest);  
   }
 }

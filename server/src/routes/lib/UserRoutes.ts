@@ -1,16 +1,16 @@
-import { Router } from "express";
-import { UserMiddleware } from "../../middleware/lib/UserMiddleware";
+// import { Router } from "express";
+// import { UserMiddleware } from "../../middleware/lib/UserMiddleware";
 
-export class UserRoutes {
-  private router: Router = Router();
-      private middleware: UserMiddleware;
+// export class UserRoutes {
+//   private router: Router = Router();
+//       private middleware: UserMiddleware;
   
-      constructor(userMiddleware: UserMiddleware) {
-          this.middleware = userMiddleware;
-          // this.initializeRoutes();
-      }
+//       constructor(userMiddleware: UserMiddleware) {
+//           this.middleware = userMiddleware;
+//           // this.initializeRoutes();
+//       }
   
-      getRouter(): Router {
-          return this.router;
-      }
-}
+//       getRouter(): Router {
+//           return this.router;
+//       }
+// }

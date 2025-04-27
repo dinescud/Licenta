@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
 export interface UserModelType extends ModelType {
-  fullName: string;
-  password: string;
+  // fullName: string;
+  // password: string;
   email: string;
+  externalId: string;
 }
 
 export interface DomainModelType extends ModelType {
@@ -17,10 +18,11 @@ export interface DomainModelType extends ModelType {
 }
 
 export interface ScanHistoryModelType extends ModelType {
-  website: string;
   user: string;
-  score: string;
-  scannedAt: Date;
+  history: {
+    info: DomainModelType;
+    scannedAt: Date;
+  }[]
 }
 
 export interface ModelType extends mongoose.Document {

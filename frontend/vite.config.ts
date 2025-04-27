@@ -15,10 +15,16 @@ export default defineConfig({
     }),
   ],
   build: {
+    target: 'esnext',
+    sourcemap: true,
+    minify: false,
+    cssCodeSplit: false,
     outDir: 'dist',
     rollupOptions: {
       input: {
-        main: './index.html',
+        popup: './index.html',
+        scanHistory: './scanHistory.html',
+        statistics: './statistics.html',
       },
     },
   },

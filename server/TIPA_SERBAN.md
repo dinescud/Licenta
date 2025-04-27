@@ -1,6 +1,0 @@
-DENISA: 
-
-    NU AXIOS
-    USE CONFIG FILE
-
-    USE TSDOC

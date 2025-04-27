@@ -2,9 +2,12 @@ import * as cheerio from 'cheerio';
 import { DomainModelType } from '../../models/types';
 import { DomainModel } from '../../models/lib/DomainModel';
 import { ScanResultsType } from '../types';
+import { UserContext } from '../../types';
+import { ScanHistoryModel } from '../../models/lib/ScanHistoryModel';
 
 export class ScanLib { 
   private domainModel: DomainModel;
+  private scanHistoryModel!: ScanHistoryModel;
   
   constructor(model: DomainModel) {
       this.domainModel = model;
@@ -28,12 +31,12 @@ export class ScanLib {
         ipAddress: $('tr:nth-child(6) td:nth-child(2) strong').text().trim().replace(/(Nothing Found)/gm, ""),
         serverLocation: $('tr:nth-child(9) td:nth-child(2)').text().trim().replace(/(Nothing Found)/gm, ""),
         city: $('tr:nth-child(11) td:nth-child(2)').text().trim().replace(/(Nothing Found)/gm, ""),
-        region: $('tr:nth-child(12) td:nth-child(2)').text().trim().replace(/(Nothing Found)/gm, ""),
+        // region: $('tr:nth-child(12) td:nth-child(2)').text().trim().replace(/(Nothing Found)/gm, ""),
       };
       console.log('SCRAPE!!!');
       console.log('BEFORE', $('tr:nth-child(2) td:nth-child(2)').text().trim());
       console.log('AFTER',  $('tr:nth-child(2) td:nth-child(2)').text().trim().replace(/(Nothing Found)/gm, "").replace((/(Rescan)/gm), "").replace((/(Detected)/gm), ""));
-      await this.saveDomainData(reportData)
+      await this.saveDomainData(reportData as DomainModelType);
       return reportData;
   
     } catch (error) {
@@ -43,7 +46,7 @@ export class ScanLib {
     }
   };
 
-  private async saveDomainData (data: Partial<ScanResultsType>): Promise<DomainModelType> {
+  private async saveDomainData (data: DomainModelType): Promise<DomainModelType> {
     const saveDomain = {
       websiteAddress: data.websiteAddress,
       lastAnalysis: data.lastAnalysis,

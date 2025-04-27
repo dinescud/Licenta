@@ -37,7 +37,7 @@ export class Server {
     console.log("✅ Server initialized successfully.");
   }
   private static setupRoutes() {
-    this.app.use("/api", Factory.getInstance().getRoutes().getRouter());
+    this.app.use('/', Factory.getInstance().getRoutes().getRouter());
   }
 }
 

@@ -16,15 +16,24 @@ export class ScanRoutes {
       }
 
       private initializeRoutes(): void {
+        // this.router.post('/scan', (req, res, next) => {
+        //   console.log('Received scan request:', req.body);
+        //   this.scan(req, res, next);
+        // });
+
         this.router.post('/scan', this.scan.bind(this));
     }        
 
     private async scan(req: Request, res: Response, next?: NextFunction): Promise<void> {
+        console.log('Processing scan request');
         return this.middleware.scan(req)
             .then((response) => { 
-                console.log(response);
+                console.log('Scan successful:', response);
                 return sendValidResponse(response, res, 200)
             })
-            .catch(error => sendErrorResponse(error, res));
+            .catch(error => {
+                console.error('Scan failed:', error);
+                return sendErrorResponse(error, res);
+            });
     }
 }

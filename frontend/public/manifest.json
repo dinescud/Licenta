@@ -7,5 +7,10 @@
       "default_popup": "index.html"
     },
     "permissions": ["identity", "identity.email", "tabs", "activeTab", "webNavigation", "storage"],
-    "background": "Auth.ts"
+    "web_accessible_resources": [
+    {
+      "resources": ["scanHistory.html", "statistics.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
   }

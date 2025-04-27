@@ -8,13 +8,23 @@ import { config } from "../config/config.ts"
  * @returns {Promise<Response>} response.
  */
 export const POST_REQUEST = async (route: string, body: any): Promise<Response> => {
-    return fetch(`${config.baseUrl}${route}`, {
+    const fullUrl = `${config.baseUrl}${route}`;
+    console.log('Making POST request to:', fullUrl);
+    console.log('Request body:', body);
+    
+    return fetch(fullUrl, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(body),
-    })
+    }).then(response => {
+        console.log('Response status:', response.status);
+        return response;
+    }).catch(error => {
+        console.error('Request failed:', error);
+        throw error;
+    });
 }
 
 /**
@@ -24,10 +34,19 @@ export const POST_REQUEST = async (route: string, body: any): Promise<Response> 
  * @returns {Response} response.
  */
 export const GET_REQUEST = async (route: string): Promise<Response> => {
-    return fetch(`${config.baseUrl}${route}`, {
+    const fullUrl = `${config.baseUrl}${route}`;
+    console.log('Making GET request to:', fullUrl);
+    
+    return fetch(fullUrl, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json'
         },
-    })
+    }).then(response => {
+        console.log('Response status:', response.status);
+        return response;
+    }).catch(error => {
+        console.error('Request failed:', error);
+        throw error;
+    });
 }

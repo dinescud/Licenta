@@ -1,6 +1,27 @@
-export const config = {
-    baseUrl: 'http://localhost:3000/api',
+export const config: config_types = {
+  baseUrl: 'http://localhost:3000/api',
+  routes: {
+      loginRoute: '/auth/login',
+      registerRoute: '/auth/register',
+      scanHistory: '/scanHistory',
+      historyInfo: '/scanHistory/:id',
+      statistics: '/statistics',
+      baseRoute: '/',
+      authBaseRoute: '/auth',
+  },
+}
 
+interface config_types {
+  readonly baseUrl: string;
+  readonly routes: {
+      readonly loginRoute: string;
+      readonly registerRoute: string;
+      readonly scanHistory: string;
+      readonly historyInfo: string;
+      readonly statistics: string;
+      readonly baseRoute: string;
+      readonly authBaseRoute: string;
+  };
 }
 
 export const themes = {
@@ -29,3 +50,4 @@ export const themes = {
     '--card-shadow': '0 4px 12px rgba(0, 0, 0, 0.3)',
   }
 }
+

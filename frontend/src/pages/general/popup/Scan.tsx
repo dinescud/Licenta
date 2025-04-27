@@ -1,17 +1,19 @@
 
 import React, { useEffect, useState } from 'react'
-import { scanDomain } from '../../services/ScanningService';
-import { useAuth } from '../../contexts/AuthContext';
-import { getCurrentTabUrl } from '../../services/utils';
-import './scan.css';
+import { scanDomain } from '../../../services/ScanningService';
+// import { useAuth } from '../../../contexts/AuthContext';
+import { getCurrentTabUrl } from '../../../services/utils';
+import './Scan.scss';
 import "@theme-toggles/react/css/Classic.css"
-import { ThemeToggle } from '../../components/ThemeToggle/ThemeToggleButton';
+import { ThemeToggle } from '../../../components/ThemeToggle/ThemeToggleButton';
+// import { config } from '../../../config/config';
+import { get_history_tab, get_statistics_tab } from '../../../services/navigation';
 
 
 const ScanResults: React.FC = () => {
   const [domainInfo, setDomainInfo] = useState<any>(undefined);
   const isDangerous = parseInt(domainInfo?.detectionCounts.split('/')[0], 10) > 0;
-  const auth = useAuth();
+  // const auth = useAuth();
 
   const scan = () => {
     getCurrentTabUrl()
@@ -24,8 +26,14 @@ const ScanResults: React.FC = () => {
       .catch((err) => console.error('Failed to scan the domain:', err));
   };
 
+  // const openPage = (_path: string) => {
+  //   const url = "chrome-extension://" + chrome.runtime.id + "/index.html#" + _path;
+  //   chrome.tabs.create({ url: url });
+  //   // return navigate(_path)
+  // };
+
   useEffect(() => {
-    console.log(auth)
+    // console.log(auth)
     scan();
   }, [])
 
@@ -66,6 +74,11 @@ const ScanResults: React.FC = () => {
         <button className={`scan-button ${isDangerous ? '' : '__safe'}`}>Scan History</button>
         <button className={`scan-button ${isDangerous ? '' : '__safe'}`}>Statistics</button>
       </div>
+
+      <div className="actions">
+        <button onClick={() => get_history_tab()}>Scan History</button>
+        <button onClick={() => get_statistics_tab()}>Statistics</button>
+      </div>     
 
     </div>
   );

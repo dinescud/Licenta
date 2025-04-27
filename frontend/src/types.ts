@@ -1,8 +1,8 @@
-export interface UserContext {
-    id: string,
-    name: string,
-    mail: string,
-}
+// export interface UserContext {
+//     externalId: string,
+//     // name: string,
+//     email: string,
+// }
 
 export interface DomainModelType {
     name: string;
@@ -14,6 +14,14 @@ export interface DomainModelType {
     serverLocation: string;
     city: string;
     region: string;
+}
+
+export interface HistoryType { 
+    userId: string,
+    history: {
+        info: DomainModelType,
+        scannedAt: Date,
+    }[]
 }
 
 export interface ThemeType {

@@ -5,28 +5,20 @@ import { ScanRequest, UserContext } from "../../types";
 import { ScanResultsType } from "../types";
 import { extractDomainName, recomputeUrl } from "../utils";
 
-// export const scan = async(userContext: UserContext, request: ScanRequest): Promise<ScanResultsType> => {
-//   const domainName = await extractDomainName(request.url);
-//   const scanUrl = await recomputeUrl(domainName);
-//   console.log(domainName);
-//   const existentScan = await Factory.getInstance().getModels().domainModel.findOne({ websiteAddress : { $regex : new RegExp(domainName, "i") } });
-//   console.log('SCAN RESULTS', existentScan);
-//   if (existentScan) {
-//     console.log('SCAN RESULTS', existentScan);
-//      return Promise.resolve(existentScan as DomainModelType)
-//   } else return await Factory.getInstance().getBzl().scanLib.scrapeData(scanUrl);
-// }
-
-export const scan = async (userContext: UserContext, request: ScanRequest): Promise<ScanResultsType> => {
+export const scan = async (userId: string, request: ScanRequest): Promise<ScanResultsType> => {
+  console.log('userrrrrrrr', userId);
   return extractDomainName(request.url).then(domainName => {
     return recomputeUrl(domainName).then(scanUrl => {
       return Factory.getInstance().getModels().domainModel.findOne({ websiteAddress: { $regex: new RegExp(domainName, "i") } })
-      .then(existentScan => {
+      .then(async existentScan => {
         if (existentScan) {
+          await Factory.getInstance().getBzl().historyLib.saveScanHistory(userId, existentScan);
           console.log('SCAN RESULTS', existentScan);
           return existentScan as DomainModelType;
         } else {
-          return Factory.getInstance().getBzl().scanLib.scrapeData(scanUrl);
+          const scanResults = await Factory.getInstance().getBzl().scanLib.scrapeData(scanUrl) as DomainModelType;
+          await Factory.getInstance().getBzl().historyLib.saveScanHistory(userId, scanResults)
+          return scanResults;
         }
       });
     });

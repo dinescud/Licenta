@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { BadRequest, NotAvailable, NotFound, Unauthorized } from "../errors/CustomErrors";
 import { config } from "../config/config";
-import { decodeToken } from "../bzl/api/authApi";
+// import { decodeToken } from "../bzl/api/authApi";
 import { RequestWrapper, UserContext } from "../types";
 
 /**
@@ -63,10 +63,10 @@ export const attachCookie = (res: Response, token: string): void => {
  * @param {Request} req incoming request.
  * @returns {UserContext} details about the user.
  */
-export const extractCookie = (req: Request): UserContext => {
-    const token = req.cookies.token;
-    return decodeToken(token);
-}
+// export const extractCookie = (req: Request): UserContext => {
+//     const token = req.cookies.token;
+//     return decodeToken(token);
+// }
 
 /**
  * Method used in order to delete the cookie.

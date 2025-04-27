@@ -20,7 +20,7 @@ export class Factory {
     private constructor() {
         if (Factory._instance) throw new Error('Use Factory.getInstance() instead of new Factory()');
 
-        mongoose.set('strictQuery', false); // https://mongoosejs.com/docs/guide.html#strict
+        mongoose.set('strictQuery', false); 
         mongoose.connect(config.mongo_db, {}).then(() => console.log('Connected to mongoDb'));
         (mongoose as any).Promise = Promise;
         Factory.mongoose = mongoose;

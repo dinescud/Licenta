@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap');
+
+* {
+  margin: 0;
+}
+
+.generic-form {
+    font-family: 'Roboto Condensed', sans-serif;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 2rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #ffffff;
+
+    &__title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      opacity: 100%;
+    }
+  
+    &__field {
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center; /* Align label and input vertically */
+      justify-content: space-between; /* Add space between label and input */
+
+  
+      & label {
+        font-size: 1rem;
+        color: #333333;
+        margin-right: 1rem;
+        flex-shrink: 0; /* Prevent label from shrinking */
+        width: 30%; /* Set a fixed width for consistent alignment */
+      }
+    }
+  
+    &__input-wrapper {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      border: 1px solid #cccccc;
+      border-radius: 4px;
+      overflow: hidden;
+  
+      & input {
+        flex: 1;
+        padding: 0.5rem;
+        border: none;
+        outline: none;
+        font-size: 0.9rem;
+        width: 100%;
+      }
+      
+      .custom-placeholder-class::placeholder {
+        font-weight: 100;
+        font-style: italic;
+        color: #999999;
+      }
+  
+      & button {
+        background: none;
+        border: none;
+        padding: 0.5rem;
+        cursor: pointer;
+        outline: none;
+        color: #666666;
+  
+        &:hover {
+          color: #000000;
+        }
+      }
+    }
+  
+    &__button-wrapper {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1rem;
+  
+      & .generic-form__helper-text {
+        font-size: 0.85rem;
+        color: #555555;
+        margin-right: 1rem;
+      }
+    }
+  
+    &__button {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      color: #ffffff;
+      background-color: #000000;
+      opacity: 40%;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  
+      &:hover {
+        background-color: #0056b3;
+      }
+  
+      &:not(:last-child) {
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    &__button--primary {
+      display: block;
+      margin: 0 auto;
+      width: 100%;
+    }
+  }
+  

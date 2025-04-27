@@ -1,4 +1,5 @@
 import { Request } from "express";
+import { UserModelType } from "./models/types";
 
 export interface UserContext {
     id: string;
@@ -61,16 +62,18 @@ export interface LoginRequest {
 }
 
 export interface RegisterRequest {
-    name: string;
+    // id: string;
+    externalId: string;
     email: string;
-    password: string;
-    confirmPassword: string;
+    // password: string;
+    // confirmPassword: string;
 }
 
-export interface UserInfo {
-    fullName: string;
-    password: string;
-    email: string;
+export interface UserInfo extends Partial<UserModelType> {
+    // fullName: string;
+    // // password: string;
+    // email: string;
+    // id: string;
 }
 
 export interface RequestWrapper extends Request { 
