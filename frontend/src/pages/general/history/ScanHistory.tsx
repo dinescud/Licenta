@@ -3,7 +3,7 @@ import HistoryCard from "../../../components/history-card/HistoryCard";
 import { POST_REQUEST } from "../../../services/requests";
 import { HistoryType } from "../../../types";
 import { getProfile } from "../../auth/Auth";
-
+import "./ScanHistory.scss";
 
 export const ScanHistory: React.FC = () => {
   const [userHistory, setHistory] = useState<HistoryType>();
@@ -15,7 +15,7 @@ export const ScanHistory: React.FC = () => {
       try {
         const userId = await getProfile(); // Replace with the actual user ID (e.g., from context or props)
         console.log('userrrrrrr', )
-        const response = await POST_REQUEST("api/history/getHistory", {userId}); // Send user ID in the request body
+        const response = await POST_REQUEST("/history/getHistory", {userId}); // Send user ID in the request body
         if (response.ok) {
           const data = await response.json();
           setHistory(data);

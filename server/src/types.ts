@@ -83,3 +83,7 @@ export interface RequestWrapper extends Request {
 export interface ScanRequest { 
     url: string;
 }
+
+export interface HistoryRequest {
+    userId: string;
+}

@@ -1,4 +1,4 @@
-import { ScanRequest, UserContext } from "../../types";
+import { HistoryRequest, ScanRequest, UserContext } from "../../types";
 import { getUserScanHistory } from '../../bzl/api/historyApi';
 import { Request } from "express";
 import { ScanHistoryModelType } from "../../models/types";
@@ -7,10 +7,10 @@ export class HistoryMiddleware {
   async getScanHistory(req: any): Promise<ScanHistoryModelType> {
     console.log('REQ BOD:', req.body)
 
-    const scanRequest: ScanRequest = JSON.parse(JSON.stringify({
-        url: req.body.url,
+    const historyRequest: HistoryRequest = JSON.parse(JSON.stringify({
+        userId: req.body.userId,
     }));
 
-    return getUserScanHistory(req.user);  
+    return getUserScanHistory(historyRequest.userId);  
   }
 }

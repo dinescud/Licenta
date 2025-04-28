@@ -2,9 +2,9 @@ import { Factory } from "../../factory";
 import { ScanHistoryModelType } from "../../models/types";
 import { UserContext } from "../../types";
 
-export const getUserScanHistory = async (userContext: UserContext): Promise<ScanHistoryModelType> => {
+export const getUserScanHistory = async (userId: string): Promise<ScanHistoryModelType> => {
   return new Promise((resolve, reject) => {
-    if (!userContext.id) {
+    if (!userId) {
       reject(new Error("User ID is required"));
       return;
     }
@@ -12,7 +12,7 @@ export const getUserScanHistory = async (userContext: UserContext): Promise<Scan
     Factory.getInstance()
       .getModels()
       .scanHistoryModel // Replace with your actual model name
-      .findOne({ _id: userContext.id })
+      .findOne({ userId: userId })
       .then((userHistory) => {
         if (!userHistory || !userHistory.history || userHistory.history.length === 0) {
           reject(new Error("No scan history found for this user"));

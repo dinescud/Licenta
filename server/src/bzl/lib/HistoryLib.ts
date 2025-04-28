@@ -10,12 +10,10 @@ export class HistoryLib {
   }
 
   public async saveScanHistory(userId: string, data: DomainModelType): Promise<void> {
-    if (!userId
-    ) {
+    if (!userId) {
       throw new Error("User context or user ID is missing");
     }
 
-    // TO DO: Check if the userId exists in the database and just append history 
     const saveDomain = {
       websiteAddress: data.websiteAddress,
       lastAnalysis: data.lastAnalysis,
@@ -26,18 +24,30 @@ export class HistoryLib {
       city: data.city,
     } as DomainModelType;
 
-    const scanHistoryEntry = {
-      user: userId, // Link the user ID
-      history: [
-        {
-          info: saveDomain, // Save domain data and link it
-          scannedAt: new Date(), // Set the current date as the scan date
-        },
-      ],
+    const newHistoryEntry = {
+      info: saveDomain,
+      scannedAt: new Date(),
     };
 
-    // Save the scan history entry in the database
-    await this.scanHistoryModel.create(scanHistoryEntry);
-    console.log('Saved scan history:', scanHistoryEntry);
+    // Check if the userId already exists in the database
+    const existingEntry = await this.scanHistoryModel.findOne({ userId });
+
+    if (existingEntry) {
+      // If the userId exists, append the new history entry using updateOne
+      await this.scanHistoryModel.updateOne(
+        { userId },
+        { $push: { history: newHistoryEntry } }
+      );
+      console.log('Appended new history entry for user:', userId);
+    } else {
+      // If the userId does not exist, create a new document
+      const scanHistoryEntry = {
+        userId: userId,
+        history: [newHistoryEntry],
+      };
+
+      await this.scanHistoryModel.create(scanHistoryEntry);
+      console.log('Created new scan history entry for user:', userId);
+    }
   }
 }

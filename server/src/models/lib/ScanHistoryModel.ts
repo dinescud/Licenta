@@ -6,7 +6,7 @@ import { transformFn } from "../utils/utils";
 
 export class ScanHistoryModel extends AbstractModel<ScanHistoryModelType> {
     protected SchemaDef: mongoose.SchemaDefinition = {
-        user: { type: String, unique: true, required: true },
+        userId: { type: String, unique: true, required: true },
         history: [
             {
                 info: {

@@ -1,0 +1,41 @@
+.scan-history {
+  padding: 24px;
+  background-color: #494949; // Light background for contrast
+  min-height: 100vh;
+  width: 100%; // Ensure the component takes full width
+  box-sizing: border-box; // Include padding in the width calculation
+
+  .scan-history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #333333;
+    }
+  }
+
+  .scan-history__list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); // Ensure only 2 cards per row
+    gap: 16px; // Space between cards
+  }
+
+  .loading,
+  .error {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666666;
+    margin-top: 50px;
+  }
+
+  .no-history-message {
+    font-size: 1rem;
+    color: #888888;
+    text-align: center;
+    margin-top: 32px;
+  }
+}

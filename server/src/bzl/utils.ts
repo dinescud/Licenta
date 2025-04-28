@@ -11,7 +11,7 @@ export const formatPaginationFilter = (pagination?: QueryPaginationFilter): Quer
 }
 
 export async function extractDomainName(url: string): Promise<string> {
-    const match = url.match(/(?:https?:\/\/)?(?:www\.)?([^\/]+\.[a-z]+)/);
+    const match = url.match(/(?:https?:\/\/)?(?:www\.)?([^\/]+\.[a-z]+)/);  // TO DO: modify to work with different urls
     console.log('MATCH', match);
     return match ? match[1] : '';
   }
