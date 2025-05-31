@@ -36,6 +36,26 @@ export interface StatisticsModelType extends ModelType {
   serverLocation: Record<string, any>[];
 }
 
+export interface StatisticsModelType extends ModelType {
+  userId: string;
+  scanResult: {
+    safe: Number;
+    dangerous: Number;
+  };
+  serverLocation: Record<string, any>[];
+
+}
+
+export interface StatisticsModelType extends ModelType {
+  userId: string;
+  scanResult: {
+    safe: Number;
+    dangerous: Number;
+  };
+  serverLocation: Record<string, any>[];
+
+}
+
 export interface ModelType extends mongoose.Document {
   id: string;
 }
