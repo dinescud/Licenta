@@ -1,0 +1,37 @@
+@startuml C4ComponentDetailed
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+' Layout containers left-to-right
+left to right direction
+
+Container_Boundary(ext, "Chrome Extension", "Manifest V3, React, Chart.js") {
+  Component(swCtrl,   "ServiceWorkerController",   "JavaScript", "Coordinates scans, caching & messaging")
+  Component(tabMod,   "TabsModule",               "JavaScript", "Retrieves active tab URL")
+  Component(idMod,    "IdentityModule",           "JavaScript", "Obtains user ID")
+  Component(uiComp,   "PopupUIComponent",         "React",      "Renders popup and charts")
+}
+
+Container_Boundary(svc, "Backend Service", "Node.js, Express.js, Cheerio, MongoDB") {
+  Component(apiCtrl,     "APIController",       "TypeScript", "Routes /lookup, /history, /users")
+  Component(cacheSvc,    "CacheService",        "TypeScript", "Checks and writes domain cache")
+  Component(scrapeSvc,   "ScrapingService",     "TypeScript", "Fetches & parses HTML via Cheerio")
+  Component(normSvc,     "NormalizationService","TypeScript", "Standardizes scraped data")
+  Component(historySvc,  "HistoryService",      "TypeScript", "Manages user scan history")
+  Component(mailSvc,     "MailService",         "TypeScript", "Sends notification emails")
+  Component(prunerJob,   "PrunerJob",           "node-cron",  "Prunes cache entries older than 3 days")
+}
+
+' Define relationships
+Rel(swCtrl,   tabMod,    "uses")
+Rel(swCtrl,   idMod,     "uses")
+Rel(swCtrl,   uiComp,    "updates with results")
+Rel(swCtrl,   apiCtrl,   "invokes lookup")
+Rel(apiCtrl,  cacheSvc,  "checks cache")
+Rel(apiCtrl,  scrapeSvc, "scrapes on cache miss")
+Rel(scrapeSvc,normSvc,   "passes raw HTML for normalization")
+Rel(normSvc,  cacheSvc,  "stores normalized data")
+Rel(apiCtrl,  historySvc,"logs scan events")
+Rel(apiCtrl,  mailSvc,   "sends emails when enabled")
+Rel(prunerJob,cacheSvc,  "removes stale entries")
+
+@enduml

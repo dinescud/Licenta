@@ -1,9 +1,10 @@
 .scan-history {
   padding: 24px;
-  background-color: #494949; // Light background for contrast
+  background-color: #494949;
   min-height: 100vh;
-  width: 100%; // Ensure the component takes full width
-  box-sizing: border-box; // Include padding in the width calculation
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 50px;
 
   .scan-history-header {
     display: flex;
@@ -14,13 +15,32 @@
     h1 {
       font-size: 2rem;
       font-weight: bold;
-      color: #333333;
+      color: #dedede;
+      margin: 0;
+    }
+
+    .search-bar {
+      input {
+        padding: 8px 12px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        width: 220px;
+        background: #fff;
+        color: #222;
+        transition: border-color 0.2s;
+        outline: none;
+
+        &:focus {
+          border-color: #3672e9;
+        }
+      }
     }
   }
 
   .scan-history__list {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); // Ensure only 2 cards per row
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); // Ensure only 2 cards per row
     gap: 16px; // Space between cards
   }
 

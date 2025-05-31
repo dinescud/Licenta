@@ -1,3 +1,15 @@
+:root {
+  --toggle-width: 75px;
+  --toggle-height: 35px;
+  --icon-size: 18px;
+  --ball-size: 25px;
+  --padding: 6px;
+}
+
+.theme-toggle {
+  display: inline-block;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -6,87 +18,64 @@
 
 label {
   display: flex;
-  width: 75px;
-  height: 35px;
+  width: var(--toggle-width);
+  height: var(--toggle-height);
   justify-content: space-between;
   align-items: center;
-  padding: 0 6px;
+  padding: 0 var(--padding);
   background: #fff;
   border-radius: 50px;
   cursor: pointer;
   position: relative;
+  transition: 0.3s;
 }
 
 label i {
-  font-size: 18px;
+  font-size: var(--icon-size);
+  transition: 0.8s;
 }
+
 label .fa-sun {
   color: gold;
-  transition: 0.8s;
+  opacity: 1;
 }
+
 label .fa-moon {
   color: #fff;
-  transition: 0.8s;
-}
-label .ball {
-  display: none;
-}
-input:checked + label .fa-sun {
-  transform: translateX(-43px);
-}
-input:checked + label .fa-moon {
-  transform: translateX(43px);
-}
-label .fa-sun {
-  opacity: 1;
-}
-input:checked + label .fa-sun {
   opacity: 0;
 }
-label .fa-moon {
+
+input:checked + label .fa-sun {
+  transform: translateX(calc(var(--toggle-width) / 2)); /* Adjusted direction */
   opacity: 0;
 }
+
 input:checked + label .fa-moon {
+  transform: translateX(calc(-1 * var(--toggle-width) / 2)); /* Adjusted direction */
   opacity: 1;
 }
+
 label .ball {
   position: absolute;
   display: block;
-  width: 25px;
-  height: 25px;
-  top: 5px;
-  left: 45px;
+  width: var(--ball-size);
+  height: var(--ball-size);
+  top: calc((var(--toggle-height) - var(--ball-size)) / 2);
+  left: calc(var(--toggle-width) - var(--ball-size) - var(--padding));
   background: #222;
   border-radius: 50%;
   transition: 0.8s;
 }
+
 input:checked + label .ball {
-  transform: translateX(-40px);
-}
-label .fa-moon {
-  transform: translateX(43px);
-}
-input:checked + label .fa-moon {
-  transform: translateX(0);
-}
-label {
-  transition: 0.3s;
-}
-input:checked + label {
-  background: #222;
-}
-input:checked + label .ball {
+  transform: translateX(calc(-1 * (var(--toggle-width) - var(--ball-size) - 2 * var(--padding))));
   background: #fff;
 }
+
 input {
   display: none;
 }
-input:checked + label .fa-sun {
-  transform: translateX(-43px) rotate(160deg);
-}
-label .fa-moon {
-  transform: translateX(43px) rotate(250deg);
-}
-input:checked + label .fa-moon {
-  transform: translateX(0), rotate(0);
+
+input:checked + label {
+  background: #222;
 }

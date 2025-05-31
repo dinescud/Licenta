@@ -1,0 +1,20 @@
+@startuml C4SystemContext
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(user, "End User", "Uses Chrome extension to perform domain safety checks and view statistics")
+System_Ext(chromeExt, "Chrome Extension", "Manifest V3, React, Chart.js, runs in user’s browser")
+System_Ext(whois, "WHOIS Registry", "External domain registration lookup service")
+System_Ext(geoip, "DNS Geolocation Service", "External IP-to-location API")
+System_Ext(reputation, "Reputation Aggregator", "External site providing risk labels")
+System(backend, "Backend Service", "Node.js, Express.js, Cheerio scraper, node-cron, Nodemailer")
+SystemDb(mongo, "MongoDB", "Stores domain cache, user history, and user profiles")
+System_Ext(mailhog, "MailHog SMTP", "Local SMTP server for development email capture")
+
+Rel(user, chromeExt, "Clicks icon or auto-scan domains via extension")
+Rel(chromeExt, backend, "HTTPS REST calls to /lookup, /history, /users")
+Rel(backend, whois, "HTTP requests for registration data")
+Rel(backend, geoip, "HTTP requests for server geolocation")
+Rel(backend, reputation, "HTTP requests for risk categories")
+Rel(backend, mongo, "Reads/writes cached metadata and user data")
+Rel(backend, mailhog, "Sends notification emails in dev")
+@enduml

@@ -2,8 +2,8 @@ import * as cheerio from 'cheerio';
 import { DomainModelType } from '../../models/types';
 import { DomainModel } from '../../models/lib/DomainModel';
 import { ScanResultsType } from '../types';
-import { UserContext } from '../../types';
 import { ScanHistoryModel } from '../../models/lib/ScanHistoryModel';
+import { normalizeDate } from '../utils';
 
 export class ScanLib { 
   private domainModel: DomainModel;

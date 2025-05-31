@@ -25,6 +25,7 @@ export default defineConfig({
         popup: './index.html',
         scanHistory: './scanHistory.html',
         statistics: './statistics.html',
+        settings: './settings.html',
       },
     },
   },

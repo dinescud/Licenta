@@ -1,0 +1,70 @@
+.navbar {
+  position: fixed; /* Ensure the navbar is always at the top */
+  top: 0;
+  left: 0;
+  width: calc(100% - 48px); /* Full width */
+  height: 50px; /* Smaller height */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px; /* Adjust padding for smaller height */
+  background-color: #2a2a2a;
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 1000; /* Ensure it stays above other content */
+
+  .logo {
+    font-size: 1.25rem; /* Slightly smaller font size */
+    font-weight: bold;
+    background-color: #3672e9;
+    color: #fff;
+    width: 35px; /* Smaller size */
+    height: 35px; /* Smaller size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  .title {
+    font-size: 1rem; /* Slightly smaller font size */
+    font-weight: bold;
+    color: #fff;
+    margin-left: 16px;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 24px; /* Space between tabs */
+
+    .tab {
+      position: relative;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 0; /* Remove padding to make it look like text */
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #3672e9; /* Change text color on hover */
+      }
+
+      &.active {
+        color: #3672e9; /* Active tab text color */
+      }
+
+      &.active::after {
+        content: "";
+        position: absolute;
+        bottom: -5px; /* Position the underline */
+        left: 0;
+        width: 100%;
+        height: 2px; /* Thickness of the underline */
+        background-color: #3672e9; /* Blue underline for active tab */
+        transition: width 0.3s ease;
+      }
+    }
+  }
+}

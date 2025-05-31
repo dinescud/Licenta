@@ -1,13 +1,12 @@
-
 import React, { useEffect, useState } from 'react'
 import { scanDomain } from '../../../services/ScanningService';
 // import { useAuth } from '../../../contexts/AuthContext';
 import { getCurrentTabUrl } from '../../../services/utils';
 import './Scan.scss';
 import "@theme-toggles/react/css/Classic.css"
-import { ThemeToggle } from '../../../components/ThemeToggle/ThemeToggleButton';
+// import { ThemeToggle } from '../../../components/ThemeToggle/ThemeToggleButton';
 // import { config } from '../../../config/config';
-import { get_history_tab, get_statistics_tab } from '../../../services/navigation';
+import { get_history_tab } from '../../../services/navigation';
 
 
 const ScanResults: React.FC = () => {
@@ -38,48 +37,53 @@ const ScanResults: React.FC = () => {
   }, [])
 
   return (
-    <div className={`scan-result-card ${isDangerous ? '__danger' : '__safe'}`}>
-      <div className="scan-header">
+    <div className={`scan-result-card`}>
+      {/* <div className="scan-header">
         <ThemeToggle />
+        <button className="close-btn" onClick={() => chrome.windows.getCurrent().then(() => close())}>✕</button>
+      </div> */}
+      {/* <div className="scan-title">Scan Results Overview</div> */}
+
+      <div className="scan-header">
+        <div className="scan-title">Result Overview</div>
+        {/* <ThemeToggle className='small-theme-toggle'/> */}
         <button className="close-btn" onClick={() => chrome.windows.getCurrent().then(() => close())}>✕</button>
       </div>
 
-      <div className="scan-title">Scan Results Overview</div>
+      <div className={`scan-status ${isDangerous ? '__danger' : '__safe'}`}>
+        {isDangerous ? '✗ Dangerous' : '✓ Safe'}
+      </div>
+
 
       <div className="scan-details">
-        <div className='scan-details-label'>Website Address:</div>
-        <div className='scan-details-value'>{domainInfo?.websiteAddress}</div>
+        <div className="scan-details-label">Website Address:</div>
+        <div className="scan-details-value">{domainInfo?.websiteAddress}</div>
 
-        <div className='scan-details-label'>Detection Counts:</div>
-        <div className='scan-details-value'>
+        <div className="scan-details-label">Detection Counts:</div>
+        <div className="scan-details-value">
           <div className={`detection-count ${isDangerous ? '__danger' : '__safe'}`}>
-          {domainInfo?.detectionCounts}
+            {domainInfo?.detectionCounts}
           </div>
         </div>
 
-        <div className='scan-details-label'>Last Analysis Date:</div>
-        <div className='scan-details-value'>{domainInfo?.lastAnalysis}</div>
+        <div className="scan-details-label">Last Analysis Date:</div>
+        <div className="scan-details-value">{domainInfo?.lastAnalysis}</div>
 
-        <div className='scan-details-label'>Domain Registration:</div> 
-        <div className='scan-details-value'>{domainInfo?.domainRegistration}</div>
+        <div className="scan-details-label">Domain Registration:</div>
+        <div className="scan-details-value">{domainInfo?.domainRegistration}</div>
 
-        <div className='scan-details-label'>Server Location:</div> 
-        <div className='scan-details-value'>{domainInfo?.serverLocation}</div>
+        <div className="scan-details-label">Server Location:</div>
+        <div className="scan-details-value">{domainInfo?.serverLocation}</div>
 
-        <div className='scan-details-label'>City:</div> 
-        <div className='scan-details-value'>{domainInfo?.city}</div>
+        <div className="scan-details-label">City:</div>
+        <div className="scan-details-value">{domainInfo?.city}</div>
       </div>
 
-      <div className="scan-buttons">
-        <button className={`scan-button ${isDangerous ? '' : '__safe'}`}>Scan History</button>
-        <button className={`scan-button ${isDangerous ? '' : '__safe'}`}>Statistics</button>
-      </div>
-
-      <div className="actions">
-        <button onClick={() => get_history_tab()}>Scan History</button>
-        <button onClick={() => get_statistics_tab()}>Statistics</button>
-      </div>     
-
+      {/* <div className="scan-button"> */}
+        <button onClick={() => get_history_tab(false)} className={`scan-button`}>
+          View more details
+        </button>
+      {/* </div> */}
     </div>
   );
 };

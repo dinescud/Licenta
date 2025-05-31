@@ -4,18 +4,19 @@ import { POST_REQUEST } from "../../../services/requests";
 import { HistoryType } from "../../../types";
 import { getProfile } from "../../auth/Auth";
 import "./ScanHistory.scss";
+import Navbar from "../../../components/navbar/NavBar";
 
 export const ScanHistory: React.FC = () => {
   const [userHistory, setHistory] = useState<HistoryType>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const userId = await getProfile(); // Replace with the actual user ID (e.g., from context or props)
-        console.log('userrrrrrr', )
-        const response = await POST_REQUEST("/history/getHistory", {userId}); // Send user ID in the request body
+        const userId = await getProfile();
+        const response = await POST_REQUEST("/history/getHistory", { userId });
         if (response.ok) {
           const data = await response.json();
           setHistory(data);
@@ -33,6 +34,10 @@ export const ScanHistory: React.FC = () => {
     fetchHistory();
   }, []);
 
+  const filteredHistory = userHistory?.history.filter(item =>
+    item.info.websiteAddress.toLowerCase().includes(search.toLowerCase())
+  );
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -42,21 +47,32 @@ export const ScanHistory: React.FC = () => {
   }
 
   return (
-    <div className="scan-history">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <h1>Scan History</h1>
+    <>
+      <Navbar activeTab="history" />
+      <div className="scan-history">
+        <div className="scan-history-header">
+          <h1>Scan History</h1>
+          <div className="search-bar">
+            <input
+              type="text"
+              placeholder="Search by domain..."
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="scan-history__list">
+          {filteredHistory?.map((item, index) => (
+            <HistoryCard
+              key={index}
+              domain={item.info.websiteAddress}
+              score={item.info.detectionCounts}
+              date={new Date(item.scannedAt)}
+            />
+          ))}
+        </div>
       </div>
-      <div className="scan-history__list">
-        {userHistory?.history.map((item, index) => (
-          <HistoryCard
-            key={index}
-            domain={item.info.websiteAddress}
-            score={item.info.detectionCounts}
-            date={new Date(item.scannedAt)} // Convert string to Date object
-          />
-        ))}
-      </div>
-    </div>
+    </>
   );
 };
 

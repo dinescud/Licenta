@@ -10,11 +10,9 @@ if (root) {
   createRoot(root).render(
     <StrictMode>
       <ThemeProvider defaultTheme="dark">
-        {/* <AuthProvider> */}
           <MemoryRouter>
             <ScanHistory />
           </MemoryRouter>
-        {/* </AuthProvider> */}
       </ThemeProvider>
     </StrictMode>,
   )

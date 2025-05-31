@@ -1,0 +1,27 @@
+@startuml C4Container
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(user, "End User")
+System_Boundary(chromeBoundary, "Chrome Extension") {
+  Container(sw, "Service Worker", "JavaScript", "Handles lookup orchestration, caching, messaging")
+  Container(cs, "Content Scripts", "JavaScript", "Injects UI elements into web pages")
+  Container(ui, "Popup UI", "React", "Interface for manual scans, settings, and charts")
+  Container(ls, "Local Storage", "Chrome API", "Stores user preferences locally")
+}
+
+System_Boundary(serverBoundary, "Backend Service") {
+  Container(api, "Express API", "Node.js", "Exposes endpoints /lookup, /history, /users")
+  Container(scraper, "Cheerio Scraper", "JavaScript", "Fetches and parses HTML from external sources")
+  Container(db, "MongoDB", "NoSQL DB", "Collections: domains, history, users")
+  Container(cron, "Pruner", "node-cron", "Removes cache entries older than 3 days")
+  Container(mail, "Mailing Subsystem", "Nodemailer", "Sends emails via MailHog")
+}
+
+Rel(user, ui, "Interacts with popup for scans and stats")
+Rel(ui, sw, "Sends scan requests")
+Rel(sw, api, "Calls /lookup endpoint")
+Rel(api, scraper, "Invokes scraping logic")
+Rel(scraper, db, "Caches domain data")
+Rel(cron, db, "Prunes stale cache")
+Rel(api, mail, "Sends notifications when enabled")
+@enduml

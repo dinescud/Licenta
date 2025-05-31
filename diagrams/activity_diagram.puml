@@ -1,0 +1,15 @@
+@startuml
+start
+:User triggers scan;
+:ServiceWorker retrieves active tab URL;
+:Check MongoDB cache;
+if (cached?) then (yes)
+  :Load metadata;
+else (no)
+  :Invoke Express /lookup;
+  :Scrape and parse data;
+  :Store in cache;
+endif
+:Send data back to content script/UI;
+stop
+@enduml

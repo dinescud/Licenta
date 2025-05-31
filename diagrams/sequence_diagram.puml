@@ -1,0 +1,20 @@
+@startuml
+actor User
+participant SW as "ServiceWorker"
+participant API
+participant DB as "MongoDB"
+
+User -> SW: clickScan()
+SW -> API: GET /lookup?domain=example.com
+alt cache hit
+  API -> DB: find(domain)
+  DB --> API: return cachedData
+else cache miss
+  API -> ScrapingService: fetchHTML()
+  ScrapingService -> ScrapingService: parseFields()
+  ScrapingService --> API: metadata
+  API -> DB: save(metadata)
+end
+API --> SW: send metadata
+SW -> User: displayResults()
+@enduml

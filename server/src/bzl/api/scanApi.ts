@@ -6,7 +6,6 @@ import { ScanResultsType } from "../types";
 import { extractDomainName, recomputeUrl } from "../utils";
 
 export const scan = async (userId: string, request: ScanRequest): Promise<ScanResultsType> => {
-  console.log('userrrrrrrr', userId);
   return extractDomainName(request.url).then(domainName => {
     return recomputeUrl(domainName).then(scanUrl => {
       return Factory.getInstance().getModels().domainModel.findOne({ websiteAddress: { $regex: new RegExp(domainName, "i") } })

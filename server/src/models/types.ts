@@ -25,6 +25,16 @@ export interface ScanHistoryModelType extends ModelType {
   }[]
 }
 
+export interface StatisticsModelType extends ModelType {
+  userId: string;
+  scanResult: {
+    safe: Number;
+    dangerous: Number;
+  };
+  serverLocation: Record<string, any>[];
+
+}
+
 export interface ModelType extends mongoose.Document {
   id: string;
 }
