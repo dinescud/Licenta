@@ -19,10 +19,12 @@ export interface DomainModelType extends ModelType {
 
 export interface ScanHistoryModelType extends ModelType {
   user: string;
-  history: {
-    info: DomainModelType;
-    scannedAt: Date;
-  }[]
+  history: HistoryType[];
+}
+
+export interface HistoryType {
+  info: DomainModelType;
+  scannedAt: Date;
 }
 
 export interface StatisticsModelType extends ModelType {
@@ -32,7 +34,6 @@ export interface StatisticsModelType extends ModelType {
     dangerous: Number;
   };
   serverLocation: Record<string, any>[];
-
 }
 
 export interface ModelType extends mongoose.Document {

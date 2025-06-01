@@ -1,8 +1,6 @@
 import { NextFunction, Router, Response, Request } from "express";
 import { sendErrorResponse, sendValidResponse } from "../helper";
 import { HistoryMiddleware } from "../../middleware/lib/HistoryMiddleware";
-import { UserContext } from "../../types";
-// import { authMiddleware } from "../../utils/utils";
 
 export class HistoryRoutes {
   private router: Router = Router();
@@ -18,7 +16,6 @@ export class HistoryRoutes {
       }
 
       private initializeRoutes(): void {
-        // this.router.use(authMiddleware);
         this.router.post('/getHistory', this.getHistory.bind(this));
     }        
 

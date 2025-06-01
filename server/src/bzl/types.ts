@@ -13,11 +13,6 @@ export interface ScanStatusStatistics {
     dangerous: number;
 }
 
-export interface MostScannedStatistics { 
-    websiteAddress: string;
-    scanCount: number;
-}
-
 export interface DomainAgeStatistics {
     lessThanOneYear: number;
     oneToFiveYears: number;
@@ -25,4 +20,12 @@ export interface DomainAgeStatistics {
     moreThanTenYears: number;
     newest: string;
     oldest: string;
+}
+
+export interface StatisticsType {
+    scanStatus: ScanStatusStatistics;
+    mostScanned: Record<string, number>;
+    domainAge: DomainAgeStatistics;
+    totalScans: number;
+    topCountries: Record<string, number>[];
 }

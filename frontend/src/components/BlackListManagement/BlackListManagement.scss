@@ -1,0 +1,296 @@
+/* =============================================================================
+   BlacklistManagement.scss
+   -----------------------------------------------------------------------------
+   1. Page Container + Header Card
+   2. “Add new” Form Layout
+   3. Tabs & Search Row
+   4. Table Card (white‐background wrapper)
+   5. Utility Classes
+   ============================================================================= */
+
+/* ---------------------------------
+   1. Page Container + Header Card
+   --------------------------------- */
+.blacklist-page-container {
+  background-color: #242424; /* light gray page background */
+  // padding: 24px;
+  font-family: "Segoe UI", Roboto, -apple-system, sans-serif;
+  color: #333;
+}
+
+.blacklist-header-card {
+  background-color: #ffffff; /* white card */
+  border: 1px solid #d1d1d1;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.blacklist-title {
+  margin: 0 0 16px 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #212121;
+}
+
+.add-new-label {
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.add-new-subtext {
+  font-size: 0.875rem;
+  color: #666666;
+  margin-bottom: 16px;
+}
+
+/* ---------------------------------
+   2. “Add new” Form Layout
+   --------------------------------- */
+.add-new-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* vertical spacing between form rows */
+}
+
+/* Each row consists of a label + an input (or input‐pair) */
+.form-row {
+  display: flex;
+  align-items: center;
+
+  /* If the row is the “button” row, we right‐align the button */
+  &.button-row {
+    justify-content: flex-end;
+  }
+}
+
+.form-label {
+  flex: 0 0 120px; /* fixed label width */
+  font-size: 0.95rem;
+  color: #333333;
+  margin-right: 12px;
+}
+
+/* For the first/last name pair */
+.form-input-pair {
+  display: flex;
+  gap: 12px;
+  flex: 1; /* take remaining space */
+
+  .text-input {
+    flex: 1;
+  }
+}
+
+/* Phone number field: a small “flag” + input */
+.phone-input-wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1; /* take remaining space */
+  max-width: 400px; /* optional limit */
+
+  .country-dropdown {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+    background-color: #f7f7f7;
+    padding: 0 8px;
+    font-size: 1.125rem;
+    cursor: pointer;
+
+    .flag {
+      margin-right: 4px;
+    }
+    .caret {
+      font-size: 0.875rem;
+      color: #555;
+    }
+  }
+
+  .text-input {
+    flex: 1;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    color: #333;
+    outline: none;
+    transition: border-color 0.2s;
+
+    &:focus {
+      border-color: #3672e9; /* blue focus */
+      box-shadow: 0 0 0 2px rgba(54, 114, 233, 0.2);
+    }
+  }
+}
+
+/* Single email field spanning full width */
+.text-input.full-width {
+  flex: 1;
+  max-width: 400px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s;
+
+  &:focus {
+    border-color: #3672e9;
+    box-shadow: 0 0 0 2px rgba(54, 114, 233, 0.2);
+  }
+}
+
+/* Generic text inputs (used also in the first/last name fields) */
+.text-input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s;
+
+  &:focus {
+    border-color: #3672e9;
+    box-shadow: 0 0 0 2px rgba(54, 114, 233, 0.2);
+  }
+}
+
+/* Status dropdown */
+.select-input {
+  width: 180px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  color: #333;
+  outline: none;
+  background-color: #fff;
+  transition: border-color 0.2s;
+
+  &:focus {
+    border-color: #3672e9;
+    box-shadow: 0 0 0 2px rgba(54, 114, 233, 0.2);
+  }
+}
+
+/* “Add to blacklist” button */
+.btn-add {
+  background-color: #3672e9;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background-color: #295bb5;
+  }
+}
+
+/* ---------------------------------
+   3. Tabs & Search Row
+   --------------------------------- */
+.tabs-search-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+/* Tabs container */
+.tabs-container {
+  display: flex;
+  gap: 8px;
+
+  .tab-item {
+    padding: 8px 16px;
+    background-color: #e0e0e0;
+    border-radius: 4px 4px 0 0;
+    font-size: 0.95rem;
+    cursor: pointer;
+    color: #333333;
+    transition: background 0.2s, color 0.2s;
+
+    &.active {
+      background-color: #ffffff;
+      border-bottom: 2px solid #3672e9;
+      color: #3672e9;
+      font-weight: 600;
+    }
+
+    &:hover:not(.active) {
+      background-color: #d4d4d4;
+    }
+  }
+}
+
+/* Search input + button on the right */
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .search-input {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    color: #333;
+    outline: none;
+    transition: border-color 0.2s;
+
+    &:focus {
+      border-color: #3672e9;
+      box-shadow: 0 0 0 2px rgba(54, 114, 233, 0.2);
+    }
+  }
+
+  .btn-search {
+    background-color: #3672e9;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background-color: #295bb5;
+    }
+  }
+}
+
+/* ---------------------------------
+   4. Table Card (white‐background wrapper)
+   --------------------------------- */
+.table-card {
+  background-color: #ffffff;
+  border: 1px solid #d1d1d1;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* ---------------------------------
+   5. Utility Classes (if needed)
+   --------------------------------- */
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.hidden {
+  display: none !important;
+}

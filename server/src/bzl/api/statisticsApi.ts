@@ -1,35 +1,173 @@
-// import express from "express";
-// import { StatisticsLib } from "../lib/StatisticsLib";
+import { Factory } from "../../factory";
+import {
+  DomainAgeStatistics,
+  ScanStatusStatistics,
+  StatisticsType,
+} from "../types";
 
-// const router = express.Router();
+export const getScanStatusStatistics = async (
+  userId: string,
+  timeSpan: string
+): Promise<ScanStatusStatistics> => {
+  return new Promise((resolve, reject) => {
+    if (!userId) {
+      reject(new Error("User ID is required"));
+      return;
+    }
+    Factory.getInstance()
+      .getModels()
+      .scanHistoryModel.findOne({ userId })
+      .then(async (userHistory) => {
+        if (
+          userHistory &&
+          userHistory.history &&
+          userHistory.history.length > 0
+        ) {
+          const scanStatus = await Factory.getInstance()
+            .getBzl()
+            .statisticsLib.getScanStatusStatistics(
+              userHistory.history,
+              timeSpan
+            );
+          resolve(scanStatus);
+        } else {
+          resolve({ safe: 0, dangerous: 0 });
+        }
+      });
+  });
+};
 
-// /**
-//  * GET /api/statistics
-//  * Retrieves statistics for a user based on the timeframe.
-//  * Query Parameters:
-//  * - userId: The ID of the user.
-//  * - timeframe: The timeframe for the statistics (e.g., "7d", "30d", "12month").
-//  */
-// router.get("/statistics", async (req, res) => {
-//   const { userId, timeframe } = req.query;
+export const getMostScannedStatistics = async (
+  userId: string,
+  timeSpan: string
+): Promise<Record<string, number>> => {
+  return new Promise((resolve, reject) => {
+    if (!userId) {
+      reject(new Error("User ID is required"));
+      return;
+    }
+    Factory.getInstance()
+      .getModels()
+      .scanHistoryModel.findOne({ userId })
+      .then(async (userHistory) => {
+        if (
+          userHistory &&
+          userHistory.history &&
+          userHistory.history.length > 0
+        ) {
+          const mostScanned = await Factory.getInstance()
+            .getBzl()
+            .statisticsLib.getMostScannedStatistics(
+              userHistory.history,
+              timeSpan
+            );
+          resolve(mostScanned);
+        } else {
+          resolve({});
+        }
+      });
+  });
+};
 
-//   if (!userId || !timeframe) {
-//     return res.status(400).json({ error: "Missing userId or timeframe parameter" });
-//   }
+export const getDomainAgeStatistics = async (
+  userId: string,
+  timeSpan: string
+): Promise<DomainAgeStatistics> => {
+  return new Promise((resolve, reject) => {
+    if (!userId) {
+      reject(new Error("User ID is required"));
+      return;
+    }
+    Factory.getInstance()
+      .getModels()
+      .scanHistoryModel.findOne({ userId })
+      .then(async (userHistory) => {
+        if (
+          userHistory &&
+          userHistory.history &&
+          userHistory.history.length > 0
+        ) {
+          const domainAge = await Factory.getInstance()
+            .getBzl()
+            .statisticsLib.getDomainAgeStatistics(
+              userHistory.history,
+              timeSpan
+            );
+          resolve(domainAge);
+        } else {
+          resolve({
+            lessThanOneYear: 0,
+            oneToFiveYears: 0,
+            fiveToTenYears: 0,
+            moreThanTenYears: 0,
+            newest: "",
+            oldest: "",
+          });
+        }
+      });
+  });
+};
 
-//   try {
-//     // Fetch reputation statistics
-//     // const reputation = StatisticsLib.getReputationStatistics(userId as string, timeframe as string);
+export const getTotalScans = async (
+  userId: string,
+  timeSpan: string
+): Promise<number> => {
+  return new Promise((resolve, reject) => {
+    if (!userId) {
+      reject(new Error("User ID is required"));
+      return;
+    }
+     Factory.getInstance()
+      .getModels()
+      .scanHistoryModel.findOne({ userId })
+      .then(async (userHistory) => {
+        if (
+          userHistory &&
+          userHistory.history &&
+          userHistory.history.length > 0
+        ) {
+          const totalScans = await Factory.getInstance()
+            .getBzl()
+            .statisticsLib.getTotalScans(
+              userHistory.history,
+              timeSpan
+            );
+          resolve(totalScans);
+        } else {
+          resolve(0);
+        }
+      });
+  });
+};
 
-//     // Fetch sentiment statistics
-//     // const sentiment = StatisticsLib.getSentimentStatistics(userId as string, timeframe as string);
-
-//     // Return the combined statistics
-//     res.json({ reputation, sentiment });
-//   } catch (error) {
-//     console.error("Error fetching statistics:", error);
-//     res.status(500).json({ error: "Failed to fetch statistics" });
-//   }
-// });
-
-// export default router;
+export const getTopCountries = async (
+  userId: string,
+  timeSpan: string
+): Promise<Record<string, number>> => {
+  return new Promise((resolve, reject) => {
+    if (!userId) {
+      reject(new Error("User ID is required"));
+      return;
+    }
+    Factory.getInstance()
+      .getModels()
+      .scanHistoryModel.findOne({ userId })
+      .then(async (userHistory) => {
+        if (
+          userHistory &&
+          userHistory.history &&
+          userHistory.history.length > 0
+        ) {
+          const topCountries = await Factory.getInstance()
+            .getBzl()
+            .statisticsLib.getTopCountriesStatistics(
+              userHistory.history,
+              timeSpan
+            );
+          resolve(topCountries);
+        } else {
+          resolve({});
+        }
+      });
+  });
+};

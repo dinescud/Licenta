@@ -12,7 +12,6 @@ export const scan = async (userId: string, request: ScanRequest): Promise<ScanRe
       .then(async existentScan => {
         if (existentScan) {
           await Factory.getInstance().getBzl().historyLib.saveScanHistory(userId, existentScan);
-          console.log('SCAN RESULTS', existentScan);
           return existentScan as DomainModelType;
         } else {
           const scanResults = await Factory.getInstance().getBzl().scanLib.scrapeData(scanUrl) as DomainModelType;

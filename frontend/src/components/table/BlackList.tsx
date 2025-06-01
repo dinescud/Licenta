@@ -11,7 +11,7 @@ interface GenericTableProps<T> {
   data: T[];
 }
 
-export function GenericTable<T extends { id: string | number; [key: string]: any }>({
+export function BlackListTable<T extends { id: string | number; [key: string]: any }>({
   columns,
   data,
 }: GenericTableProps<T>) {

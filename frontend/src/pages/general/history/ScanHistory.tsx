@@ -49,8 +49,8 @@ export const ScanHistory: React.FC = () => {
   return (
     <>
       <Navbar activeTab="history" />
-      <div className="scan-history">
-        <div className="scan-history-header">
+      <div className="history-page">
+        <div className="history-header">
           <h1>Scan History</h1>
           <div className="search-bar">
             <input

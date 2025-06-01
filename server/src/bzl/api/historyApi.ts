@@ -1,6 +1,5 @@
 import { Factory } from "../../factory";
 import { ScanHistoryModelType } from "../../models/types";
-import { UserContext } from "../../types";
 
 export const getUserScanHistory = async (userId: string): Promise<ScanHistoryModelType> => {
   return new Promise((resolve, reject) => {

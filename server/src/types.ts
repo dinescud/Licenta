@@ -87,3 +87,8 @@ export interface ScanRequest {
 export interface HistoryRequest {
     userId: string;
 }
+
+export interface StatisticsRequest {
+    userId: string;
+    timeSpan: string; 
+}

@@ -154,10 +154,11 @@ export const Statistics: React.FC = () => {
   return (
     <>
       <Navbar activeTab="statistics" />
-      <div className="statistics">
-        <div className="content">
-          <h1>Your Statistics</h1>
-
+      <div className="statistics-page">
+        <div className="statistics-header">
+          <h1>Statistics</h1>
+        </div>
+        <div className="statistics-content">
           <div className="statistics__cards">
             {/* Website Reputation Over Time Card */}
             <div className="statistics__card">

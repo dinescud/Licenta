@@ -74,3 +74,35 @@ export const get_history_tab = function (inPlace: boolean) {
     );
   }
 };
+
+export const get_settings_tab = function (inPlace: boolean) {
+  if (inPlace) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      if (tabs.length > 0 && tabs[0].id) {
+        chrome.tabs.update(tabs[0].id, {
+          url: "chrome-extension://" + chrome.runtime.id + "/settings.html",
+        });
+      }
+    });
+  } else {
+    chrome.tabs.query(
+      {
+        url: "chrome-extension://" + chrome.runtime.id + "/settings.html",
+        currentWindow: true,
+      },
+      function (tabs) {
+        if (tabs.length > 0 && tabs[0].id) {
+          chrome.tabs.highlight({
+            windowId: tabs[0].windowId,
+            tabs: tabs[0].index,
+          });
+          chrome.tabs.reload(tabs[0].id);
+        } else {
+          chrome.tabs.create({
+            url: chrome.runtime.getURL("settings.html"),
+          });
+        }
+      }
+    );
+  }
+};

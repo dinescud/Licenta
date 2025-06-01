@@ -16,11 +16,6 @@ export class ScanRoutes {
       }
 
       private initializeRoutes(): void {
-        // this.router.post('/scan', (req, res, next) => {
-        //   console.log('Received scan request:', req.body);
-        //   this.scan(req, res, next);
-        // });
-
         this.router.post('/scan', this.scan.bind(this));
     }        
 

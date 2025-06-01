@@ -9,7 +9,6 @@ export class ScanMiddleware {
 
     const scanRequest: ScanRequest = JSON.parse(JSON.stringify({
         url: req.body.url,
-        // userContext: req.body.externalId,
     }));
     
     const userContext = req.body.externalId;
