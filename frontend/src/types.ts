@@ -37,3 +37,12 @@ export interface DomainAgeStatistics {
     newest: string;
     oldest: string;
 }
+
+export interface UserSettingsType {
+  autoScanning: boolean;
+  historyStatistics: boolean;
+  blockNavigation: boolean;
+  sensitivityThreshold: number;
+  notificationsEmail: boolean;
+  notificationEmailAddress: string;
+}

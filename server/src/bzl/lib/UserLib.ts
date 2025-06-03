@@ -22,12 +22,13 @@ export class UserLib {
         .getModels()
         .userModel.findOne({ userId: userId });
       if (!user) {
-        throw new Error("User not found");
+        console.error(`User not found for userId: ${userId}`);
+        throw new Error("USER_NOT_FOUND");
       }
       return user.settings as UserSettingsType;
     } catch (error) {
       console.error("Error fetching user settings:", error);
-      throw new Error("Internal server error");
+      throw error;
     }
   }
 
@@ -51,6 +52,64 @@ export class UserLib {
       return user.settings;
     } catch (error) {
       console.error("Error setting user settings:", error);
+      throw new Error("Internal server error");
+    }
+  }
+
+  async getUserBlackList(userId: string): Promise<string[]> {
+    try {
+      const user = await Factory.getInstance()
+        .getModels()
+        .userModel.findOne({ userId: userId });
+      if (!user) {
+        throw new Error("User not found");
+      }
+      return user.blackList;
+    } catch (error) {
+      console.error("Error fetching user settings:", error);
+      throw new Error("Internal server error");
+    }
+  }
+
+  async addBlackListItem(userId: string, website: string): Promise<void> {
+    try {
+      const user = await Factory.getInstance()
+        .getModels()
+        .userModel.findOne({ userId: userId });
+      if (!user) {
+        throw new Error("User not found");
+      }
+      const existentItem = user.blackList.find((item) => item === website);
+      if (existentItem) {
+        console.error("Item already exists in blacklist");
+      } else
+        Factory.getInstance()
+          .getModels()
+          .userModel.updateOne(
+            { userId: userId },
+            { $append: { balcklist: website } }
+          );
+    } catch (error) {
+      console.error("Error fetching user settings:", error);
+      throw new Error("Internal server error");
+    }
+  }
+
+  async removeBlackListItem(userId: string, website: string): Promise<void> {
+    try {
+      const user = await Factory.getInstance()
+        .getModels()
+        .userModel.findOne({ userId: userId });
+      if (!user) {
+        throw new Error("User not found");
+      }
+      const itemToDelete = user.blackList.findIndex((item) => {
+        item === website;
+      });
+      if (itemToDelete) user.blackList.splice(itemToDelete, 1);
+      else console.error("Item not found in blacklist");
+    } catch (error) {
+      console.error("Error fetching user settings:", error);
       throw new Error("Internal server error");
     }
   }

@@ -1,18 +1,83 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Settings.scss";
 import BlacklistManagement from "../../../components/BlackListManagement/BlackListManagement";
 import Navbar from "../../../components/navbar/NavBar";
+import { getSettings, setSettings } from "../../../services/UserService";
+import { UserSettingsType } from "../../../types";
 
 export default function Settings() {
+  // State for all settings
+  const [settings, setSettingsState] = useState<UserSettingsType | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Local state for debounced fields
   const [notificationEmailAddress, setNotificationEmailAddress] = useState("");
   const [sensitivityThreshold, setSensitivityThreshold] = useState(0);
 
-  // These states control each toggle. You can hook them up to real logic later.
-  const [notificationsEmail, setNotificationsEmail] = useState(true);
+  // Fetch settings on mount
+  useEffect(() => {
+    setLoading(true);
+    getSettings()
+      .then((data) => {
+        setSettingsState(data);
+        setNotificationEmailAddress(data.notificationEmailAddress || "");
+        setSensitivityThreshold(data.sensitivityThreshold || 0);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message || "Failed to load settings");
+        setLoading(false);
+      });
+  }, []);
 
-  const [autoScanning, setAutoScanning] = useState(false);
-  const [historyStatistics, sethistoryStatistics] = useState(true);
-  const [blockNavigation, setblockNavigation] = useState(true);
+  // Helper to update a setting
+  const updateSetting = (key: keyof UserSettingsType, value: any) => {
+    setSettingsState((prev) => (prev ? { ...prev, [key]: value } : prev));
+    setSettings([{ key, value }]).catch((err) => {
+      setError(err.message || `Failed to update setting: ${key}`);
+    });
+  };
+
+  // Debounced update for notificationEmailAddress
+  useEffect(() => {
+    if (settings) {
+      const handler = setTimeout(() => {
+        if (notificationEmailAddress !== settings.notificationEmailAddress) {
+          updateSetting("notificationEmailAddress", notificationEmailAddress);
+        }
+      }, 600);
+      return () => clearTimeout(handler);
+    }
+  }, [notificationEmailAddress]);
+
+  // Debounced update for sensitivityThreshold
+  useEffect(() => {
+    if (settings) {
+      const handler = setTimeout(() => {
+        if (sensitivityThreshold !== settings.sensitivityThreshold) {
+          updateSetting("sensitivityThreshold", sensitivityThreshold);
+        }
+      }, 600);
+      return () => clearTimeout(handler);
+    }
+  }, [sensitivityThreshold]);
+
+  if (loading)
+    return (
+      <div className="settings-page">
+        <Navbar activeTab="settings" />
+        <div className="content">Loading...</div>
+      </div>
+    );
+  if (error)
+    return (
+      <div className="settings-page">
+        <Navbar activeTab="settings" />
+        <div className="content">Error: {error}</div>
+      </div>
+    );
+  if (!settings) return null;
 
   return (
     <>
@@ -40,8 +105,10 @@ export default function Settings() {
               <label className="toggle-switch">
                 <input
                   type="checkbox"
-                  checked={notificationsEmail}
-                  onChange={() => setNotificationsEmail((prev) => !prev)}
+                  checked={settings.notificationsEmail}
+                  onChange={() =>
+                    updateSetting("notificationsEmail", !settings.notificationsEmail)
+                  }
                 />
                 <span className="slider" />
               </label>
@@ -82,8 +149,8 @@ export default function Settings() {
               <label className="toggle-switch">
                 <input
                   type="checkbox"
-                  checked={autoScanning}
-                  onChange={() => setAutoScanning((prev) => !prev)}
+                  checked={settings.autoScanning}
+                  onChange={() => updateSetting("autoScanning", !settings.autoScanning)}
                 />
                 <span className="slider" />
               </label>
@@ -100,8 +167,8 @@ export default function Settings() {
               <label className="toggle-switch">
                 <input
                   type="checkbox"
-                  checked={historyStatistics}
-                  onChange={() => sethistoryStatistics((prev) => !prev)}
+                  checked={settings.historyStatistics}
+                  onChange={() => updateSetting("historyStatistics", !settings.historyStatistics)}
                 />
                 <span className="slider" />
               </label>
@@ -118,8 +185,8 @@ export default function Settings() {
               <label className="toggle-switch">
                 <input
                   type="checkbox"
-                  checked={blockNavigation}
-                  onChange={() => setblockNavigation((prev) => !prev)}
+                  checked={settings.blockNavigation}
+                  onChange={() => updateSetting("blockNavigation", !settings.blockNavigation)}
                 />
                 <span className="slider" />
               </label>
@@ -138,10 +205,10 @@ export default function Settings() {
                 type="number"
                 className="input"
                 placeholder="1"
+                min={1}
+                max={39}
                 value={sensitivityThreshold}
-                onChange={(e) =>
-                  setSensitivityThreshold(Number(e.target.value))
-                }
+                onChange={(e) => setSensitivityThreshold(Number(e.target.value))}
               />
             </div>
           </div>
