@@ -6,17 +6,17 @@ import {
 } from "../types";
 
 export const getScanStatusStatistics = async (
-  userId: string,
+  externalId: string,
   timeSpan: string
 ): Promise<ScanStatusStatistics> => {
   return new Promise((resolve, reject) => {
-    if (!userId) {
-      reject(new Error("User ID is required"));
+    if (!externalId) {
+      reject(new Error("External ID is required"));
       return;
     }
     Factory.getInstance()
       .getModels()
-      .scanHistoryModel.findOne({ userId })
+      .scanHistoryModel.findOne({ externalId: externalId })
       .then(async (userHistory) => {
         if (
           userHistory &&
@@ -33,22 +33,26 @@ export const getScanStatusStatistics = async (
         } else {
           resolve({ safe: 0, dangerous: 0 });
         }
+      })
+      .catch((err) => {
+        console.error('Error in getScanStatusStatistics:', err);
+        reject(new Error('Internal server error'));
       });
   });
 };
 
 export const getMostScannedStatistics = async (
-  userId: string,
+  externalId: string,
   timeSpan: string
 ): Promise<Record<string, number>> => {
   return new Promise((resolve, reject) => {
-    if (!userId) {
-      reject(new Error("User ID is required"));
+    if (!externalId) {
+      reject(new Error("External ID is required"));
       return;
     }
     Factory.getInstance()
       .getModels()
-      .scanHistoryModel.findOne({ userId })
+      .scanHistoryModel.findOne({ externalId: externalId })
       .then(async (userHistory) => {
         if (
           userHistory &&
@@ -65,22 +69,26 @@ export const getMostScannedStatistics = async (
         } else {
           resolve({});
         }
+      })
+      .catch((err) => {
+        console.error('Error in getMostScannedStatistics:', err);
+        reject(new Error('Internal server error'));
       });
   });
 };
 
 export const getDomainAgeStatistics = async (
-  userId: string,
+  externalId: string,
   timeSpan: string
 ): Promise<DomainAgeStatistics> => {
   return new Promise((resolve, reject) => {
-    if (!userId) {
-      reject(new Error("User ID is required"));
+    if (!externalId) {
+      reject(new Error("External ID is required"));
       return;
     }
     Factory.getInstance()
       .getModels()
-      .scanHistoryModel.findOne({ userId })
+      .scanHistoryModel.findOne({ externalId: externalId })
       .then(async (userHistory) => {
         if (
           userHistory &&
@@ -104,22 +112,26 @@ export const getDomainAgeStatistics = async (
             oldest: "",
           });
         }
+      })
+      .catch((err) => {
+        console.error('Error in getDomainAgeStatistics:', err);
+        reject(new Error('Internal server error'));
       });
   });
 };
 
 export const getTotalScans = async (
-  userId: string,
+  externalId: string,
   timeSpan: string
 ): Promise<number> => {
   return new Promise((resolve, reject) => {
-    if (!userId) {
-      reject(new Error("User ID is required"));
+    if (!externalId) {
+      reject(new Error("External ID is required"));
       return;
     }
      Factory.getInstance()
       .getModels()
-      .scanHistoryModel.findOne({ userId })
+      .scanHistoryModel.findOne({ externalId: externalId })
       .then(async (userHistory) => {
         if (
           userHistory &&
@@ -136,22 +148,26 @@ export const getTotalScans = async (
         } else {
           resolve(0);
         }
+      })
+      .catch((err) => {
+        console.error('Error in getTotalScans:', err);
+        reject(new Error('Internal server error'));
       });
   });
 };
 
 export const getTopCountries = async (
-  userId: string,
+  externalId: string,
   timeSpan: string
 ): Promise<Record<string, number>> => {
   return new Promise((resolve, reject) => {
-    if (!userId) {
-      reject(new Error("User ID is required"));
+    if (!externalId) {
+      reject(new Error("External ID is required"));
       return;
     }
     Factory.getInstance()
       .getModels()
-      .scanHistoryModel.findOne({ userId })
+      .scanHistoryModel.findOne({ externalId: externalId })
       .then(async (userHistory) => {
         if (
           userHistory &&
@@ -168,6 +184,10 @@ export const getTopCountries = async (
         } else {
           resolve({});
         }
+      })
+      .catch((err) => {
+        console.error('Error in getTopCountries:', err);
+        reject(new Error('Internal server error'));
       });
   });
 };

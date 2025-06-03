@@ -16,13 +16,13 @@ export class UserLib {
     this.userModel = model;
   }
 
-  async getUserSettings(userId: string): Promise<UserSettingsType> {
+  async getUserSettings(externalId: string): Promise<UserSettingsType> {
     try {
       const user = await Factory.getInstance()
         .getModels()
-        .userModel.findOne({ userId: userId });
+        .userModel.findOne({ externalId });
       if (!user) {
-        console.error(`User not found for userId: ${userId}`);
+        console.error(`User not found for externalId: ${externalId}`);
         throw new Error("USER_NOT_FOUND");
       }
       return user.settings as UserSettingsType;
@@ -33,13 +33,13 @@ export class UserLib {
   }
 
   async setUserSettings(
-    userId: string,
+    externalId: string,
     settings: { key: keyof UserSettingsType; value: any }[]
   ): Promise<UserSettingsType> {
     try {
       const user = await Factory.getInstance()
         .getModels()
-        .userModel.findOne({ userId: userId });
+        .userModel.findOne({ externalId });
       if (!user) {
         throw new Error("User not found");
       }
@@ -56,11 +56,11 @@ export class UserLib {
     }
   }
 
-  async getUserBlackList(userId: string): Promise<string[]> {
+  async getUserBlackList(externalId: string): Promise<string[]> {
     try {
       const user = await Factory.getInstance()
         .getModels()
-        .userModel.findOne({ userId: userId });
+        .userModel.findOne({ externalId });
       if (!user) {
         throw new Error("User not found");
       }
@@ -71,42 +71,41 @@ export class UserLib {
     }
   }
 
-  async addBlackListItem(userId: string, website: string): Promise<void> {
+  async addBlackListItem(externalId: string, website: string): Promise<void> {
     try {
       const user = await Factory.getInstance()
         .getModels()
-        .userModel.findOne({ userId: userId });
+        .userModel.findOne({ externalId });
       if (!user) {
         throw new Error("User not found");
       }
       const existentItem = user.blackList.find((item) => item === website);
       if (existentItem) {
         console.error("Item already exists in blacklist");
-      } else
+      } else {
         Factory.getInstance()
           .getModels()
           .userModel.updateOne(
-            { userId: userId },
-            { $append: { balcklist: website } }
+            { externalId },
+            { $push: { blackList: website } }
           );
+      }
     } catch (error) {
       console.error("Error fetching user settings:", error);
       throw new Error("Internal server error");
     }
   }
 
-  async removeBlackListItem(userId: string, website: string): Promise<void> {
+  async removeBlackListItem(externalId: string, website: string): Promise<void> {
     try {
       const user = await Factory.getInstance()
         .getModels()
-        .userModel.findOne({ userId: userId });
+        .userModel.findOne({ externalId });
       if (!user) {
         throw new Error("User not found");
       }
-      const itemToDelete = user.blackList.findIndex((item) => {
-        item === website;
-      });
-      if (itemToDelete) user.blackList.splice(itemToDelete, 1);
+      const itemToDelete = user.blackList.findIndex((item) => item === website);
+      if (itemToDelete !== -1) user.blackList.splice(itemToDelete, 1);
       else console.error("Item not found in blacklist");
     } catch (error) {
       console.error("Error fetching user settings:", error);

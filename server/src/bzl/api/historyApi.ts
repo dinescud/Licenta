@@ -11,7 +11,7 @@ export const getUserScanHistory = async (userId: string): Promise<ScanHistoryMod
     Factory.getInstance()
       .getModels()
       .scanHistoryModel // Replace with your actual model name
-      .findOne({ userId: userId })
+      .findOne({ externalId: userId })
       .then((userHistory) => {
         if (!userHistory || !userHistory.history || userHistory.history.length === 0) {
           reject(new Error("No scan history found for this user"));

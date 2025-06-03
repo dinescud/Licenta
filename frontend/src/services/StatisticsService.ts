@@ -4,7 +4,7 @@ import { POST_REQUEST } from "./requests";
 export const getMostScanned = async (timeSpan: string) => {
   const userId = await getProfile();
   return POST_REQUEST("/statistics/getMostScanned", {
-    userId,
+    externalId: userId,
     timeSpan
   }).then(async (response) => {
     if (response.status === 200) {
@@ -20,7 +20,7 @@ export const getMostScanned = async (timeSpan: string) => {
 export const getStatusStatistics = async (timeSpan: string) => {
   const userId = await getProfile();
   return POST_REQUEST("/statistics/getStatusStatistics", {
-    userId,
+    externalId: userId,
     timeSpan
   }).then(async (response) => {
     if (response.status === 200) {
@@ -36,7 +36,7 @@ export const getStatusStatistics = async (timeSpan: string) => {
 export const getTopCountries = async (timeSpan: string) => {
   const userId = await getProfile();
   return POST_REQUEST("/statistics/getTopCountries", {
-    userId,
+    externalId: userId,
     timeSpan
   }).then(async (response) => {
     if (response.status === 200) {
@@ -52,7 +52,7 @@ export const getTopCountries = async (timeSpan: string) => {
 export const getDomainAge = async (timeSpan: string) => {
   const userId = await getProfile();
   return POST_REQUEST("/statistics/getDomainAge", {
-    userId,
+    externalId: userId,
     timeSpan
   }).then(async (response) => {
     if (response.status === 200) {
@@ -68,7 +68,7 @@ export const getDomainAge = async (timeSpan: string) => {
 export const getTotalScanned = async (timeSpan: string) => {
   const userId = await getProfile();
   return POST_REQUEST("/statistics/getTotalScanned", {
-    userId,
+    externalId: userId,
     timeSpan
   }).then(async (response) => {
     console.log('RESPONSE:', response)

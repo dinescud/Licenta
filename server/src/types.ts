@@ -85,14 +85,14 @@ export interface ScanRequest {
 }
 
 export interface HistoryRequest {
-    userId: string;
+    externalId: string;
 }
 
 export interface UserRequest {
-    userId: string;
+    externalId: string;
 }
 
 export interface StatisticsRequest {
-    userId: string;
+    externalId: string;
     timeSpan: string; 
 }

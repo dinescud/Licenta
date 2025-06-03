@@ -8,9 +8,9 @@ export class HistoryMiddleware {
     console.log('REQ BOD:', req.body)
 
     const historyRequest: HistoryRequest = JSON.parse(JSON.stringify({
-        userId: req.body.userId,
+        externalId: req.body.externalId,
     }));
 
-    return getUserScanHistory(historyRequest.userId);  
+    return getUserScanHistory(historyRequest.externalId);  
   }
 }

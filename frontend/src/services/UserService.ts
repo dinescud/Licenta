@@ -5,7 +5,7 @@ import { POST_REQUEST } from "./requests";
 export const getSettings = async () => {
   const userId = await getProfile();
   return POST_REQUEST("/user/getSettings", {
-    userId,
+    externalId: userId,
   }).then(async (response) => {
     if (response.status === 200) {
       const result = await response.json();

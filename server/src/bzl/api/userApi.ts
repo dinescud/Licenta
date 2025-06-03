@@ -3,17 +3,17 @@ import { ScanHistoryModelType } from "../../models/types";
 import { UserSettingsType } from "../types";
 
 export const getUserSettings = async (
-  userId: string
+  externalId: string
 ): Promise<UserSettingsType> => {
   return new Promise((resolve, reject) => {
-    if (!userId) {
-      reject(new Error("User ID is required"));
+    if (!externalId) {
+      reject(new Error("External ID is required"));
       return;
     }
 
     Factory.getInstance()
       .getBzl()
-      .userLib.getUserSettings(userId)
+      .userLib.getUserSettings(externalId)
       .then((userSettings) => {
         resolve(userSettings);
       })
@@ -29,41 +29,42 @@ export const getUserSettings = async (
 };
 
 export const setUserSettings = async (
-  userId: string,
+  externalId: string,
   settings: { key: keyof UserSettingsType; value: any }[]
 ): Promise<UserSettingsType> => {
   return new Promise((resolve, reject) => {
-    if (!userId) {
-      reject(new Error("User ID is required"));
+    if (!externalId) {
+      reject(new Error("External ID is required"));
       return;
     }
 
     Factory.getInstance()
       .getBzl()
-      .userLib.setUserSettings(userId, settings)
+      .userLib.setUserSettings(externalId, settings)
       .then(async(updatedSettings) => {
         await Factory.getInstance()
           .getModels()
           .userModel.updateOne(
-            { userId: userId },
+            { externalId },
             { $set: { settings: updatedSettings } }
           );
+        resolve(updatedSettings);
       });
   });
 };
 
 export const getBlackList = async (
-  userId: string
+  externalId: string
 ): Promise<string[]> => {
   return new Promise((resolve, reject) => {
-    if (!userId) {
-      reject(new Error("User ID is required"));
+    if (!externalId) {
+      reject(new Error("External ID is required"));
       return;
     }
 
     Factory.getInstance()
       .getBzl()
-      .userLib.getUserBlackList(userId)
+      .userLib.getUserBlackList(externalId)
       .then((userBlackList) => {
         resolve(userBlackList);
       })
@@ -75,33 +76,37 @@ export const getBlackList = async (
 };
 
 export const addBlackListItem = async (
-  userId: string,
+  externalId: string,
   website: string
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
-    if (!userId) {
-      reject(new Error("User ID is required"));
+    if (!externalId) {
+      reject(new Error("External ID is required"));
       return;
     }
 
     Factory.getInstance()
       .getBzl()
-      .userLib.addBlackListItem(userId, website)
+      .userLib.addBlackListItem(externalId, website)
+      .then(resolve)
+      .catch(reject);
   });
 };
 
 export const removeBlackListItem = async (
-  userId: string,
+  externalId: string,
   website: string
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
-    if (!userId) {
-      reject(new Error("User ID is required"));
+    if (!externalId) {
+      reject(new Error("External ID is required"));
       return;
     }
 
     Factory.getInstance()
       .getBzl()
-      .userLib.removeBlackListItem(userId, website)
+      .userLib.removeBlackListItem(externalId, website)
+      .then(resolve)
+      .catch(reject);
   });
 };
