@@ -88,3 +88,27 @@
       },
     },
   };
+
+  export const radarOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      r: {
+        grid: {
+          color: "rgba(255, 255, 255, 0.1)",
+          drawBorder: false,
+        },
+        ticks: {
+          color: "rgba(255, 255, 255, 0.6)",
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: true,
+      },
+      tooltip: {
+        backgroundColor: "rgba(0, 0, 0, 0.7)",
+      },
+    },
+  }

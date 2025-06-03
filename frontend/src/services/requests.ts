@@ -9,8 +9,6 @@ import { config } from "../config/config.ts"
  */
 export const POST_REQUEST = async (route: string, body: any): Promise<Response> => {
     const fullUrl = `${config.baseUrl}${route}`;
-    console.log('Making POST request to:', fullUrl);
-    console.log('Request body:', body);
     
     return fetch(fullUrl, {
         method: "POST",
@@ -35,7 +33,6 @@ export const POST_REQUEST = async (route: string, body: any): Promise<Response> 
  */
 export const GET_REQUEST = async (route: string): Promise<Response> => {
     const fullUrl = `${config.baseUrl}${route}`;
-    console.log('Making GET request to:', fullUrl);
     
     return fetch(fullUrl, {
         method: "GET",

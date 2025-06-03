@@ -4,7 +4,6 @@ import { StatisticsRequest } from "../../types";
 
 export class StatisticsMiddleware {
   async getScanStatusStatistics(req: any): Promise<ScanStatusStatistics> {
-    console.log('REQ BOD:', req.body)
 
     const statisticsRequest: StatisticsRequest = JSON.parse(JSON.stringify({
         userId: req.body.userId,
@@ -15,7 +14,6 @@ export class StatisticsMiddleware {
   }
 
   async getMostScannedStatistics(req: any): Promise<Record<string, number>> {
-    console.log('REQ BOD:', req.body)
 
     const statisticsRequest: StatisticsRequest = JSON.parse(JSON.stringify({
         userId: req.body.userId,
@@ -26,7 +24,6 @@ export class StatisticsMiddleware {
   }
 
   async getDomainAgeStatistics(req: any): Promise<DomainAgeStatistics> {
-    console.log('REQ BOD:', req.body)
 
     const statisticsRequest: StatisticsRequest = JSON.parse(JSON.stringify({
         userId: req.body.userId,
@@ -48,7 +45,6 @@ export class StatisticsMiddleware {
   }
 
   async getTopCountries(req: any): Promise<Record<string, number>> {
-    console.log('REQ BOD:', req.body)
 
     const statisticsRequest: StatisticsRequest = JSON.parse(JSON.stringify({
         userId: req.body.userId,

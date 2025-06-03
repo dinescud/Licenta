@@ -4,6 +4,8 @@ import _ from "lodash";
 import { DomainAgeStatistics, ScanStatusStatistics } from "../types";
 import { parseDateThreshold } from "../utils";
 import { HistoryType } from "../../models/types";
+const MOST_SCANNED_LIMIT = 10; // Limit for most scanned statistics
+const TOP_COUNTRIES_LIMITS = 5; // Limit for top countries statistics
 
 export class StatisticsLib {
   /**
@@ -49,7 +51,7 @@ export class StatisticsLib {
   ): Promise<Record<string, number>> {
     const threshold = parseDateThreshold(timeSpan);
     const filteredScans = threshold
-      ? _.filter(userHistory, (entry) => entry.scannedAt >= threshold)
+      ? _.filter(userHistory, (entry) => entry.scannedAt >= threshold && entry.info.serverLocation !== 'Unknown')
       : userHistory;
 
     // Build a list of serverLocation values:
@@ -60,8 +62,19 @@ export class StatisticsLib {
 
     // Use lodash to countBy the array:
     const counts = _.countBy(locations);
+    // Convert to [address, count] array, sort descending
+    const sortedArray: [string, number][] = Object.entries(counts).sort(
+      (a, b) => b[1] - a[1]
+    );
+    // Take first `limit` entries
+    const topN = sortedArray.slice(0, MOST_SCANNED_LIMIT);
+    // Convert back into an object
+    const result: Record<string, number> = {};
+    for (const [addr, cnt] of topN) {
+      result[addr] = cnt;
+    }
 
-    return counts; // e.g. { "United States": 5, Germany: 3, Unknown: 2 }
+    return result;
   }
 
   /**
@@ -82,8 +95,19 @@ export class StatisticsLib {
 
     // Count how many times each address appears:
     const counts = _.countBy(addresses);
+    // Convert to [address, count] array, sort descending
+    const sortedArray: [string, number][] = Object.entries(counts).sort(
+      (a, b) => b[1] - a[1]
+    );
+    // Take first `limit` entries
+    const topN = sortedArray.slice(0, MOST_SCANNED_LIMIT);
+    // Convert back into an object
+    const result: Record<string, number> = {};
+    for (const [addr, cnt] of topN) {
+      result[addr] = cnt;
+    }
 
-    return counts; // e.g. { "example.com": 4, "google.com": 10, ... }
+    return result;
   }
 
   /**
@@ -106,8 +130,13 @@ export class StatisticsLib {
 
     for (const entry of filteredScans) {
       const dom = entry.info as any;
+      let regString = dom.domainRegistration;
+
+      if (regString && regString.includes("|")) {
+        regString = regString.split("|")[0].trim();
+      }
       // DomainRegistration is stored as a string (e.g. "2020-05-15T00:00:00Z")
-      const regDate = new Date(dom.domainRegistration);
+      const regDate = new Date(regString);
       if (!isNaN(regDate.getTime())) {
         domainEntries.push({
           websiteAddress: dom.websiteAddress,
@@ -177,7 +206,6 @@ export class StatisticsLib {
     const filteredScans = threshold
       ? _.filter(userHistory, (entry) => entry.scannedAt >= threshold)
       : userHistory;
-
     return filteredScans.length;
   }
 }

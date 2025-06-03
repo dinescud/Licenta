@@ -74,7 +74,7 @@ export const getTotalScanned = async (timeSpan: string) => {
     console.log('RESPONSE:', response)
     if (response.status === 200) {
       const result = await response.json();
-      console.log(result)
+      console.log('RESULT', result)
       return result.total as number;
     } else {
       const error = await response.json();

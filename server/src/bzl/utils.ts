@@ -23,39 +23,46 @@ export async function recomputeUrl(domain: string): Promise<string> {
   return `https://www.urlvoid.com/scan/${domain}`;
 }
 
-/**
- * Try to parse `timeSpan` into a JavaScript Date.
- * - If it matches /^\d+(d|h|m|y)$/, we subtract that amount from now.
- *   • d = days; h = hours; m = minutes; y = years (365 d each).
- * - Otherwise, if it’s a valid ISO date string, we use new Date(timeSpan).
- * - Otherwise, return null to indicate “no filtering”.
- */
 export function parseDateThreshold(timeSpan: string): Date | null {
   if (!timeSpan) {
     return null;
   }
-  const relMatch = timeSpan.match(/^(\d+)([dhmy])$/);
+  // Accept formats like "7days", "30days", "12months", "2years", "5h", "10m"
+  const relMatch = timeSpan.match(/^(\d+)\s*(day|days|month|months|year|years|h|m)$/i);
   if (relMatch) {
     const value = parseInt(relMatch[1], 10);
-    const unit = relMatch[2];
+    const unit = relMatch[2].toLowerCase();
     let ms = 0;
     switch (unit) {
-      case "d":
+      case "day":
+      case "days":
         ms = value * 24 * 60 * 60 * 1000;
         break;
+      case "month":
+      case "months": {
+        const now = new Date();
+        now.setMonth(now.getMonth() - value);
+        return now;
+      }
+      case "year":
+      case "years": {
+        const now = new Date();
+        now.setFullYear(now.getFullYear() - value);
+        return now;
+      }
       case "h":
         ms = value * 60 * 60 * 1000;
         break;
       case "m":
         ms = value * 60 * 1000;
         break;
-      case "y":
-        ms = value * 365 * 24 * 60 * 60 * 1000;
-        break;
       default:
         ms = 0;
     }
-    return new Date(Date.now() - ms);
+    if (ms > 0) {
+      return new Date(Date.now() - ms);
+    }
+    return null;
   } else {
     const parsed = new Date(timeSpan);
     if (!isNaN(parsed.getTime())) {

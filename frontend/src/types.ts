@@ -24,29 +24,16 @@ export interface HistoryType {
     }[]
 }
 
-export interface ThemeType {
-    light: {
-        '--text-color': string,
-        '--bg-color': string,
-        '--danger-color': string,
-        '--safe-color': string,
-        '--danger-bg': string,
-        '--safe-bg': string,
-        '--button-text': string,
-        '--toggle-bg': string,
-        '--app-bg': string,
-        '--card-shadow': string,
-    },
-    dark: {
-        '--text-color': string,
-    '--bg-color': string,
-    '--danger-color': string,
-    '--safe-color': string,
-    '--danger-bg': string,
-    '--safe-bg': string,
-    '--button-text': string,
-    '--toggle-bg': string,
-    '--app-bg': string,
-    '--card-shadow':string,
-    }
+export interface ScanStatusStatistics {
+    safe: number;
+    dangerous: number;
+}
+
+export interface DomainAgeStatistics {
+    lessThanOneYear: number;
+    oneToFiveYears: number;
+    fiveToTenYears: number;
+    moreThanTenYears: number;
+    newest: string;
+    oldest: string;
 }
