@@ -8,14 +8,15 @@ export class UserModel extends AbstractModel<UserModelType> {
     protected SchemaDef: mongoose.SchemaDefinition = {
         email: { type: String, required: false, unique: true },
         externalId: { type: String, required: true, unique: true },
-        setting: {
+        settings: {
             autoScanning: { type: Boolean, default: false },
-            notificationsEmail: { type: Boolean, default: true },
+            notificationsEmail: { type: Boolean, default: false },
             notificationEmailAddress: { type: String, default: '' },
             sensitivityThreshold: { type: Number, default: 0 },
             historyStatistics: { type: Boolean, default: true },
             blockNavigation: { type: Boolean, default: true }
-        }
+        },
+        blackList: [{ type: String, default: [] }],
     };
 
     protected SchemaOptions: mongoose.SchemaOptions = {

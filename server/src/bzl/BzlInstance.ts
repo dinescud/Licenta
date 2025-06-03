@@ -2,10 +2,10 @@ import { ModelsInstance } from "../models/ModelsInstance";
 import { HistoryLib } from "./lib/HistoryLib";
 import { ScanLib } from "./lib/ScanLib";
 import { StatisticsLib } from "./lib/StatisticsLib";
-// import { UserLib } from "./lib/UserLib";
+import { UserLib } from "./lib/UserLib";
 
 export class BzlInstance {
-    // public userLib: UserLib;
+    public userLib: UserLib;
     public scanLib: ScanLib;
     public historyLib: HistoryLib;
     public statisticsLib: StatisticsLib;
@@ -13,7 +13,7 @@ export class BzlInstance {
 
     constructor(models: ModelsInstance, hashSalt: string) {
         this.modelsInstance = models;
-        // this.userLib = new UserLib(models.userModel);
+        this.userLib = new UserLib(models.userModel);
         this.scanLib = new ScanLib(models.domainModel);
         this.historyLib = new HistoryLib(models.scanHistoryModel);
         this.statisticsLib = new StatisticsLib();
