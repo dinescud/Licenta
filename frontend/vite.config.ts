@@ -8,9 +8,13 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: 'public/manifest.json',
-          dest: '.',
-        }
+          src: "public/manifest.json",
+          dest: ".",
+        },
+        {
+          src: "public/warning.html",
+          dest: ".",
+        },
       ],
     }),
   ],
@@ -22,10 +26,19 @@ export default defineConfig({
     outDir: 'dist',
     rollupOptions: {
       input: {
-        popup: './index.html',
+        popup: "index.html",
         scanHistory: './scanHistory.html',
         statistics: './statistics.html',
         settings: './settings.html',
+        // <-- Add background.js as a separate entry (so it outputs as background.js)
+        background: './background.js',
+      },
+      output: {
+        // Ensure background.js is emitted at the top level
+        entryFileNames: (chunk) => {
+          if (chunk.name === "background") return "background.js";
+          return "[name].js";
+        },
       },
     },
   },

@@ -9,8 +9,12 @@
     "permissions": ["identity", "identity.email", "tabs", "activeTab", "webNavigation", "storage"],
     "web_accessible_resources": [
     {
-      "resources": ["scanHistory.html", "statistics.html"],
+      "resources": ["scanHistory.html", "statistics.html", "settings.html", "warning.html"],
       "matches": ["<all_urls>"]
     }
-  ]
+    ],
+    "background": {
+      "service_worker": "background.js",
+      "type": "module"
+    }
   }

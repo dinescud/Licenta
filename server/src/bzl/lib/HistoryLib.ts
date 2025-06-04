@@ -30,7 +30,7 @@ export class HistoryLib {
     };
 
     // Check if the userId already exists in the database
-    const existingEntry = await this.scanHistoryModel.findOne({ userId });
+    const existingEntry = await this.scanHistoryModel.findOne({ externalId: userId });
 
     if (existingEntry) {
       // If the userId exists, append the new history entry using updateOne
@@ -42,7 +42,7 @@ export class HistoryLib {
     } else {
       // If the userId does not exist, create a new document
       const scanHistoryEntry = {
-        userId: userId,
+        externalId: userId,
         history: [newHistoryEntry],
       };
 

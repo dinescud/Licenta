@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import HistoryCard from "../../../components/history-card/HistoryCard";
-import { POST_REQUEST } from "../../../services/requests";
 import { HistoryType } from "../../../types";
-import { getProfile } from "../../auth/Auth";
 import "./ScanHistory.scss";
 import Navbar from "../../../components/navbar/NavBar";
+import { fetchHistory } from "../../../services/HistoryService";
 
 export const ScanHistory: React.FC = () => {
   const [userHistory, setHistory] = useState<HistoryType>();
@@ -13,28 +12,44 @@ export const ScanHistory: React.FC = () => {
   const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
-    const fetchHistory = async () => {
-      try {
-        const userId = await getProfile();
-        const response = await POST_REQUEST("/history/getHistory", { userId });
-        if (response.ok) {
-          const data = await response.json();
-          setHistory(data);
-        } else {
-          setError("Failed to fetch scan history.");
-        }
-      } catch (err) {
-        setError("An error occurred while fetching scan history.");
-        console.error(err);
-      } finally {
+    setLoading(true);
+    setError(null);
+
+    fetchHistory()
+      .then((history: HistoryType) => {
+        setHistory(history);
+      })
+      .catch((err) => {
+        setError(err.message || "Failed to fetch scan history.");
+        console.error("Failed to scan the domain:", err);
+      })
+      .finally(() => {
         setLoading(false);
-      }
-    };
-
-    fetchHistory();
+      });
   }, []);
+  // useEffect(() => {
+  //   const fetchHistory = async () => {
+  //     try {
+  //       const userId = await getProfile();
+  //       const response = await POST_REQUEST("/history/getHistory", { userId });
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         setHistory(data);
+  //       } else {
+  //         setError("Failed to fetch scan history.");
+  //       }
+  //     } catch (err) {
+  //       setError("An error occurred while fetching scan history.");
+  //       console.error(err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-  const filteredHistory = userHistory?.history.filter(item =>
+  //   fetchHistory();
+  // }, []);
+
+  const filteredHistory = userHistory?.history.filter((item) =>
     item.info.websiteAddress.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -57,7 +72,7 @@ export const ScanHistory: React.FC = () => {
               type="text"
               placeholder="Search by domain..."
               value={search}
-              onChange={e => setSearch(e.target.value)}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
         </div>

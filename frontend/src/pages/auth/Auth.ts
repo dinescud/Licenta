@@ -11,10 +11,7 @@ export async function getProfile(): Promise<string> {
         alert("Please sign in and enable sync in Chrome to use this feature.");
         return;
       } else {
-        const email = userInfo.email;
         const id = userInfo.id;
-        console.log("User Email:", email);
-        console.log("User ID:", id);
         resolve(id);
       }
     });
