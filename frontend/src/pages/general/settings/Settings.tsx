@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import "./Settings.scss";
-import BlacklistManagement from "../../../components/BlackListManagement/BlackListManagement";
 import Navbar from "../../../components/navbar/NavBar";
 import { getSettings, setSettings } from "../../../services/UserService";
 import { UserSettingsType } from "../../../types";
+import Blacklist from "../../../components/BlackList/BlackList";
 
 export default function Settings() {
   // State for all settings
@@ -218,7 +218,7 @@ export default function Settings() {
           ========================= */}
           <div className="blacklist-section">
             <h2 className="blacklist-title">Blacklist</h2>
-            <BlacklistManagement />
+            <Blacklist />
           </div>
         </div>
       </div>

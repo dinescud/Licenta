@@ -9,6 +9,8 @@ export const getSettings = async () => {
   }).then(async (response) => {
     if (response.status === 200) {
       const result = await response.json();
+      // Save settings to localStorage
+      localStorage.setItem("userSettings", JSON.stringify(result));
       return result as any;
     } else {
       const error = await response.json();
@@ -20,11 +22,13 @@ export const getSettings = async () => {
 export const setSettings = async (settings: { key: keyof UserSettingsType; value: any }[]) => {
   const userId = await getProfile();
   return POST_REQUEST("/user/setSettings", {
-    userId,
+    externalId: userId,
     settings,
   }).then(async (response) => {
     if (response.status === 200) {
       const result = await response.json();
+      // Update localStorage with new settings
+      localStorage.setItem("userSettings", JSON.stringify(result));
       return result as any;
     } else {
       const error = await response.json();
@@ -36,13 +40,14 @@ export const setSettings = async (settings: { key: keyof UserSettingsType; value
 export const getBlackList = async () => {
   const userId = await getProfile();
   return POST_REQUEST("/user/getBlackList", {
-    userId,
+    externalId: userId,
   }).then(async (response) => {
     if (response.status === 200) {
       const result = await response.json();
       return result as any;
     } else {
       const error = await response.json();
+      console.log("Error fetching blacklist:", error);
       throw new Error(error.error);
     }
   });
@@ -51,7 +56,7 @@ export const getBlackList = async () => {
 export const addBlackListItem = async (website: string) => {
   const userId = await getProfile();
   return POST_REQUEST("/user/addBlackListItem", {
-    userId,
+    externalId: userId,
     website,
   }).then(async (response) => {
     if (response.status === 200) {
@@ -67,7 +72,7 @@ export const addBlackListItem = async (website: string) => {
 export const removeBlackListItem = async (website: string) => {
   const userId = await getProfile();
   return POST_REQUEST("/user/removeBlackListItem", {
-    userId,
+    externalId: userId,
     website,
   }).then(async (response) => {
     if (response.status === 200) {

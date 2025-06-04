@@ -71,7 +71,7 @@ export class UserLib {
     }
   }
 
-  async addBlackListItem(externalId: string, website: string): Promise<void> {
+  async addBlackListItem(externalId: string, website: string): Promise<string[]> {
     try {
       const user = await Factory.getInstance()
         .getModels()
@@ -90,13 +90,14 @@ export class UserLib {
             { $push: { blackList: website } }
           );
       }
+      return user.blackList;
     } catch (error) {
       console.error("Error fetching user settings:", error);
       throw new Error("Internal server error");
     }
   }
 
-  async removeBlackListItem(externalId: string, website: string): Promise<void> {
+  async removeBlackListItem(externalId: string, website: string): Promise<string[]> {
     try {
       const user = await Factory.getInstance()
         .getModels()
@@ -105,8 +106,20 @@ export class UserLib {
         throw new Error("User not found");
       }
       const itemToDelete = user.blackList.findIndex((item) => item === website);
-      if (itemToDelete !== -1) user.blackList.splice(itemToDelete, 1);
-      else console.error("Item not found in blacklist");
+      console.log('ITEM TO DELETE', itemToDelete);
+      if (itemToDelete !== -1) {
+        user.blackList.splice(itemToDelete, 1);
+        // Update the user in MongoDB
+        await Factory.getInstance()
+          .getModels()
+          .userModel.updateOne(
+            { externalId },
+            { $set: { blackList: user.blackList } }
+          );
+      } else {
+        console.error("Item not found in blacklist");
+      }
+      return user.blackList;
     } catch (error) {
       console.error("Error fetching user settings:", error);
       throw new Error("Internal server error");

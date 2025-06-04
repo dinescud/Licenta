@@ -282,6 +282,78 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
+.blacklist-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  margin-top: 16px;
+  margin-bottom: 24px;
+  overflow: hidden;
+
+  th,
+  td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 1rem;
+  }
+
+  th {
+    background: #f7f7f7;
+    font-weight: 600;
+    color: #333;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  td {
+    color: #222;
+  }
+
+  .actions {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background: #fbeaea;
+    }
+    &:disabled {
+      color: #aaa;
+      cursor: not-allowed;
+      background: none;
+    }
+  }
+}
+
+.loading-message {
+  color: #3672e9;
+  font-weight: 500;
+  margin: 16px 0;
+}
+
+.error-message {
+  color: #e74c3c;
+  background: #fbeaea;
+  border: 1px solid #e0b4b4;
+  border-radius: 4px;
+  padding: 10px 16px;
+  margin: 16px 0;
+  font-size: 1rem;
+}
+
 /* ---------------------------------
    5. Utility Classes (if needed)
    --------------------------------- */

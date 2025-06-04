@@ -29,7 +29,7 @@ export class UserMiddleware {
     return getBlackList(userRequest.externalId);
   }
 
-  async addBlackListItem(req: any): Promise<void> {
+  async addBlackListItem(req: any): Promise<string[]> {
     const userRequest: UserRequest = JSON.parse(JSON.stringify({
         externalId: req.body.externalId,
     }));
@@ -38,7 +38,7 @@ export class UserMiddleware {
     return addBlackListItem(userRequest.externalId, website);
   }
 
-  async removeBlackListItem(req: any): Promise<void> {
+  async removeBlackListItem(req: any): Promise<string[]> {
     const userRequest: UserRequest = JSON.parse(JSON.stringify({
         externalId: req.body.externalId,
     }));

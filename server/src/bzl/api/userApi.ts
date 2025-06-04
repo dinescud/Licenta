@@ -78,7 +78,7 @@ export const getBlackList = async (
 export const addBlackListItem = async (
   externalId: string,
   website: string
-): Promise<void> => {
+): Promise<string[]> => {
   return new Promise((resolve, reject) => {
     if (!externalId) {
       reject(new Error("External ID is required"));
@@ -88,7 +88,7 @@ export const addBlackListItem = async (
     Factory.getInstance()
       .getBzl()
       .userLib.addBlackListItem(externalId, website)
-      .then(resolve)
+      .then(updatedBlackList => resolve(updatedBlackList))
       .catch(reject);
   });
 };
@@ -96,7 +96,7 @@ export const addBlackListItem = async (
 export const removeBlackListItem = async (
   externalId: string,
   website: string
-): Promise<void> => {
+): Promise<string[]> => {
   return new Promise((resolve, reject) => {
     if (!externalId) {
       reject(new Error("External ID is required"));
@@ -106,7 +106,7 @@ export const removeBlackListItem = async (
     Factory.getInstance()
       .getBzl()
       .userLib.removeBlackListItem(externalId, website)
-      .then(resolve)
+      .then(updatedBlackList => resolve(updatedBlackList))
       .catch(reject);
   });
 };
